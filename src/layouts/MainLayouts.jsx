@@ -5,7 +5,7 @@ import Navbar from "../components/shared/Navbar/Navbar";
 const MainLayouts = () => {
   return (
     <>
-      <div className="fixed shadow-md  z-50 bg-red-600 w-full">
+      <div className="fixed shadow-md  z-50 bg-[#F0412E] w-full">
         <Navbar></Navbar>
       </div>
       <Outlet></Outlet>

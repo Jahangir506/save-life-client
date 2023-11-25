@@ -1,28 +1,37 @@
 import "../SaveLifePerformance/SaveLifePerformance.css";
+import { Parallax } from "react-parallax";
+import bg from "../../../assets/images/home-bg.jpg";
+
 const SaveLifePerformance = () => {
   return (
     <>
-      <div className="hero h-96 performanceImg my-20">
-        <div className="bg-black w-full h-full bg-black/50"></div>
-        <div className="hero-content space-x-40 text-center text-neutral-content">
-          <div className="max-w-sm">
-            <h1 className="mb-5 text-5xl font-bold">0</h1>
-            <p className="mb-5">Year Experience</p>
-          </div>
-          <div className="max-w-sm">
-            <h1 className="mb-5 text-5xl font-bold">0</h1>
-            <p className="mb-5">Happy Donors</p>
-          </div>
-          <div className="max-w-sm">
-            <h1 className="mb-5 text-5xl font-bold">0</h1>
-            <p className="mb-5">Total Awards</p>
-          </div>
-          <div className="max-w-sm">
-            <h1 className="mb-5 text-5xl font-bold">0</h1>
-            <p className="mb-5">Happy Recipient</p>
+      <Parallax
+        blur={{ min: -30, max: 30 }}
+        bgImage={bg}
+        bgImageAlt="the performance"
+        strength={-300}
+      >
+        <div className="hero  my-20">
+          <div className="hero-content space-x-36 text-center text-black opacity-75">
+            <div className="max-w-sm">
+              <h1 className="mb-5 text-4xl font-bold">0</h1>
+              <p className="mb-5 text-xl font-semibold">Year Experience</p>
+            </div>
+            <div className="max-w-sm">
+              <h1 className="mb-5 text-4xl font-bold">0</h1>
+              <p className="mb-5 text-xl font-semibold">Happy Donors</p>
+            </div>
+            <div className="max-w-sm">
+              <h1 className="mb-5 text-4xl font-bold">0</h1>
+              <p className="mb-5 text-xl font-semibold">Total Awards</p>
+            </div>
+            <div className="max-w-sm">
+              <h1 className="mb-5 text-4xl font-bold">0</h1>
+              <p className="mb-5 text-xl font-semibold">Happy Recipient</p>
+            </div>
           </div>
         </div>
-      </div>
+      </Parallax>
     </>
   );
 };

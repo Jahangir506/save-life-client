@@ -6,7 +6,7 @@ import s3 from "../../../assets/images/s3.jpg";
 const Services = () => {
   return (
     <>
-      <div className="my-20">
+      <div className="pt-20">
         <TitleSection subHeading={"What We Do"} heading={"Our Best Services"} />
         <div className="my-12">
           <div className="hero">
@@ -22,7 +22,7 @@ const Services = () => {
                   assumenda excepturi exercitationem quasi. In deleniti eaque
                   aut repudiandae et a id nisi.
                 </p>
-                <button className="btn bg-red-500 text-white px-6 hover:bg-black rounded-none">
+                <button className="btn bg-red-500 text-white px-6 hover:bg-black rounded-none border-none">
                   Read More
                 </button>
               </div>
@@ -42,7 +42,7 @@ const Services = () => {
                   assumenda excepturi exercitationem quasi. In deleniti eaque
                   aut repudiandae et a id nisi.
                 </p>
-                <button className="btn bg-red-500 text-white px-6 hover:bg-black rounded-none">
+                <button className="btn bg-red-500 text-white px-6 hover:bg-black rounded-none border-none">
                   Read More
                 </button>
               </div>
@@ -60,7 +60,7 @@ const Services = () => {
                   assumenda excepturi exercitationem quasi. In deleniti eaque
                   aut repudiandae et a id nisi.
                 </p>
-                <button className="btn bg-red-500 text-white px-6 hover:bg-black rounded-none">
+                <button className="btn bg-red-500 text-white px-6 hover:bg-black rounded-none border-none">
                   Read More
                 </button>
               </div>

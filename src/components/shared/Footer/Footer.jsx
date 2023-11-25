@@ -1,14 +1,13 @@
 const Footer = () => {
   return (
     <>
-      <footer className="p-10 bg-red-600 text-white">
+      <footer className="p-10 bg-[#F0412E] text-white">
         <div className="footer grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-7xl mx-auto justify-items-center opacity-95">
           <nav>
             <header className="footer-title">Services</header>
-            <a className="link link-hover">Branding</a>
-            <a className="link link-hover">Design</a>
-            <a className="link link-hover">Marketing</a>
-            <a className="link link-hover">Advertisement</a>
+            <a className="link link-hover">Blood Donation</a>
+            <a className="link link-hover">Health Check</a>
+            <a className="link link-hover">Blood Bank</a>
           </nav>
           <nav>
             <header className="footer-title">Legal</header>
@@ -19,9 +18,9 @@ const Footer = () => {
           <nav>
             <header className="footer-title">Explore</header>
             <a className="link link-hover">Features</a>
-            <a className="link link-hover">Enterprise</a>
+            <a className="link link-hover">Blood Group</a>
             <a className="link link-hover">Security</a>
-            <a className="link link-hover">Pricing</a>
+            <a className="link link-hover">fund</a>
           </nav>
           <nav>
             <header className="footer-title">Social</header>
