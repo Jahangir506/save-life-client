@@ -5,7 +5,8 @@ const ContactUs = () => {
     <>
       <div className="hero mt-20">
         <div className="flex flex-col w-full border-opacity-50 pb-8">
-          <div className="divider w-[900px] divider-neutral mx-auto ">
+          <div className="divider w-[900px] divide
+           mx-auto ">
             <TitleSection heading={"Contact Us"}/>
           </div>
           <div className="hero-content gap-8 p-12 w-full flex-col lg:flex-row">
