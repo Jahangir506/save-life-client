@@ -1,3 +1,5 @@
+import { Helmet } from "react-helmet-async";
+
 const Login = () => {
 
     const handleLogin = e =>{
@@ -10,6 +12,7 @@ const Login = () => {
 
   return (
     <>
+    <Helmet><title>Save-Life | login</title></Helmet>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center md:w-1/2 lg:text-left">
