@@ -4,7 +4,7 @@ import Navbar from "../components/shared/Navbar/Navbar";
 
 const MainLayouts = () => {
   const location = useLocation();
-  const noHeaderFooter = location.pathname.includes('login')
+  const noHeaderFooter = location.pathname.includes('login') || location.pathname.includes('register')
   return (
     <>
      {noHeaderFooter || <div className="fixed  z-50 bg-[#F0412E] w-full">

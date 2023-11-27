@@ -1,13 +1,35 @@
+import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../../providers/AuthProvider";
 
 const Login = () => {
+    const { signIn } = useContext(AuthContext)
+    const navigate = useNavigate()
+    const location = useLocation()
+
+    let from = location.state?.from?.pathname || '/';
 
     const handleLogin = e =>{
         e.preventDefault()
-        const form = e.target;
-        const email = form.email.value;
-        const password = form.password.value;
-        console.log(email,password);
+       const form = e.target;
+       const email = form.email.value;
+       const password = form.password.value;
+        
+        signIn(email, password)
+        .then(result => {
+            console.log(result.user);
+            Swal.fire({
+              title: "Save life!",
+              text: "Login successfully!",
+              icon: "success"
+            });
+            navigate(from, {replace: true});
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }
 
   return (
@@ -58,6 +80,7 @@ const Login = () => {
                 <input type="submit" value='login'  className="btn btn-primary"  />
               </div>
             </form>
+            <p><small>New Here?<Link  to='/register' className="hover:underline text-blue-700">Create a Registration</Link></small></p>
           </div>
         </div>
       </div>
