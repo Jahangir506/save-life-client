@@ -1,40 +1,51 @@
-import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { AuthContext } from "../../../providers/AuthProvider";
+import useAuth from "../../../hooks/useAuth";
 
 const Login = () => {
-    const { signIn } = useContext(AuthContext)
-    const navigate = useNavigate()
-    const location = useLocation()
+  const { signIn } = useAuth()
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    let from = location.state?.from?.pathname || '/';
+  let from = location.state?.from?.pathname || "/";
 
-    const handleLogin = e =>{
-        e.preventDefault()
-       const form = e.target;
-       const email = form.email.value;
-       const password = form.password.value;
-        
-        signIn(email, password)
-        .then(result => {
-            console.log(result.user);
-            Swal.fire({
-              title: "Save life!",
-              text: "Login successfully!",
-              icon: "success"
-            });
-            navigate(from, {replace: true});
-        })
-        .catch(err => {
-            console.log(err);
-        })
-    }
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    signIn(email, password)
+      .then((result) => {
+        console.log(result.user);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: "User Login successfully",
+        });
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
-    <Helmet><title>Save-Life | login</title></Helmet>
+      <Helmet>
+        <title>Save-Life | login</title>
+      </Helmet>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center md:w-1/2 lg:text-left">
@@ -77,10 +88,21 @@ const Login = () => {
                 </label>
               </div>
               <div className="form-control mt-6">
-                <input type="submit" value='login'  className="btn btn-primary"  />
+                <input
+                  type="submit"
+                  value="login"
+                  className="btn btn-primary"
+                />
               </div>
             </form>
-            <p><small>New Here?<Link  to='/register' className="hover:underline text-blue-700">Create a Registration</Link></small></p>
+            <p>
+              <small>
+                New Here?
+                <Link to="/register" className="hover:underline text-blue-700">
+                  Create a Registration
+                </Link>
+              </small>
+            </p>
           </div>
         </div>
       </div>

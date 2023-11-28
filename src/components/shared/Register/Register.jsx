@@ -1,12 +1,11 @@
-import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { AuthContext } from "../../../providers/AuthProvider";
+import useAuth from "../../../hooks/useAuth";
 
 const Register = () => {
-  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const { createUser, updateUserProfile } = useAuth()
   const navigate = useNavigate();
 
   const {
@@ -22,29 +21,19 @@ const Register = () => {
       const loggedUser = result.user;
       console.log(loggedUser);
       updateUserProfile(data.name, data.photo)
-      .then(()=> {
-        console.log('user profile info');
-        reset()
-        Swal.fire({
-          title: "Registration successfully",
-          showClass: {
-            popup: `
-              animate__animated
-              animate__fadeInUp
-              animate__faster
-            `
-          },
-          hideClass: {
-            popup: `
-              animate__animated
-              animate__fadeOutDown
-              animate__faster
-            `
-          }
-        });
-        navigate('/')
-      })
-      .catch(error=> console.log(error))
+        .then(() => {
+          console.log("user profile info");
+          reset();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Registration successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate("/");
+        })
+        .catch((error) => console.log(error));
     });
   };
 

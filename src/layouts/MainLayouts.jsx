@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../components/shared/Footer/Footer";
 import Navbar from "../components/shared/Navbar/Navbar";
+import SearchDonors from "../pages/SearchDonors/SearchDonors";
 
 const MainLayouts = () => {
   const location = useLocation();

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Banner.css";
 
 const Banner = () => {
@@ -16,12 +17,16 @@ const Banner = () => {
               et a id nisi.
             </p>
             <div className="flex justify-center items-center gap-5">
-              <button className="btn bg-red-500 text-white hover:bg-black border-none  rounded px-8 uppercase">
-                Join as a Donor
-              </button>
-              <button className="btn bg-white hover:bg-red-500 border-none text-red-500 uppercase hover:text-white rounded px-5">
-                Search Donors
-              </button>
+              <Link to="/register">
+                <button className="btn bg-red-500 text-white hover:bg-black border-none  rounded px-8 uppercase">
+                  Join as a Donor
+                </button>
+              </Link>
+              <Link to="/searchDonors">
+                <button className="btn bg-white hover:bg-red-500 border-none text-red-500 uppercase hover:text-white rounded px-5">
+                  Search Donors
+                </button>
+              </Link>
             </div>
           </div>
         </div>
