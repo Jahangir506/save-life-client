@@ -3,9 +3,12 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import SocialLogin from "../SocialLogin";
 
 const Register = () => {
-  const { createUser, updateUserProfile } = useAuth()
+  const axiosPublic = useAxiosPublic();
+  const { createUser, updateUserProfile } = useAuth();
   const navigate = useNavigate();
 
   const {
@@ -22,16 +25,24 @@ const Register = () => {
       console.log(loggedUser);
       updateUserProfile(data.name, data.photo)
         .then(() => {
-          console.log("user profile info");
-          reset();
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Registration successfully",
-            showConfirmButton: false,
-            timer: 1500,
+          const userInfo = {
+            name: data.name,
+            email: data.email,
+          };
+          axiosPublic.post("/users", userInfo).then((res) => {
+            if (res.data.insertedId) {
+              console.log("users added database");
+              reset();
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Registration successfully",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              navigate("/");
+            }
           });
-          navigate("/");
         })
         .catch((error) => console.log(error));
     });
@@ -250,6 +261,7 @@ const Register = () => {
                 </Link>
               </small>
             </p>
+            <SocialLogin/>
           </div>
         </div>
       </div>

@@ -5,8 +5,9 @@ import Dashboard from "../layouts/Dashboard";
 import MainLayouts from "../layouts/MainLayouts";
 import Blogs from "../pages/Blogs/Blogs";
 import BloodDonationDetails from "../pages/BloodDonationDetails/BloodDonationDetails";
-import CreateDonationRequest from "../pages/Dashboard/CreateDonationRequest";
-import MyDonationRequest from "../pages/Dashboard/MyDonationRequest";
+import AllUsers from "../pages/Dashboard/Admin/AllUsers";
+import CreateDonationRequest from "../pages/Dashboard/Users/CreateDonationRequest";
+import MyDonationRequest from "../pages/Dashboard/Users/MyDonationRequest";
 import Home from "../pages/Home/Home";
 import SearchDonors from "../pages/SearchDonors/SearchDonors";
 import PrivateRoutes from "./PrivateRoutes";
@@ -21,8 +22,8 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/blogs',
-        element: <Blogs/>
+        path: "/blogs",
+        element: <Blogs />,
       },
       {
         path: "/login",
@@ -51,17 +52,25 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: '/dashboard',
-    element: <Dashboard/>,
+    path: "/dashboard",
+    element: (
+      <PrivateRoutes>
+        <Dashboard />
+      </PrivateRoutes>
+    ),
     children: [
-        {
-            path: 'my-donation-requests',
-            element: <MyDonationRequest/>
-        },
-        {
-            path: 'create-donation-request',
-            element: <CreateDonationRequest/>
-        }
-    ]
-  }
+      {
+        path: "my-donation-requests",
+        element: <MyDonationRequest />,
+      },
+      {
+        path: "create-donation-request",
+        element: <CreateDonationRequest />,
+      },
+      {
+        path: 'all-users',
+        element: <AllUsers/>
+      }
+    ],
+  },
 ]);

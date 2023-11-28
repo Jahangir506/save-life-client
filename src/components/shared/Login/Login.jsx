@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
+import SocialLogin from "../SocialLogin";
 
 const Login = () => {
   const { signIn } = useAuth()
@@ -103,6 +104,7 @@ const Login = () => {
                 </Link>
               </small>
             </p>
+            <SocialLogin/>
           </div>
         </div>
       </div>
