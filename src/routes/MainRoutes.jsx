@@ -5,6 +5,7 @@ import Dashboard from "../layouts/Dashboard";
 import MainLayouts from "../layouts/MainLayouts";
 import Blogs from "../pages/Blogs/Blogs";
 import BloodDonationDetails from "../pages/BloodDonationDetails/BloodDonationDetails";
+import AdminHome from "../pages/Dashboard/Admin/AdminHome";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import CreateDonationRequest from "../pages/Dashboard/Users/CreateDonationRequest";
 import MyDonationRequest from "../pages/Dashboard/Users/MyDonationRequest";
@@ -59,6 +60,10 @@ export const router = createBrowserRouter([
       </PrivateRoutes>
     ),
     children: [
+      {
+        path: 'admin-home',
+        element: <AdminHome/>
+      },
       {
         path: "my-donation-requests",
         element: <MyDonationRequest />,

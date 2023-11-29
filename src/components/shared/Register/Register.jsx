@@ -28,6 +28,10 @@ const Register = () => {
           const userInfo = {
             name: data.name,
             email: data.email,
+            bloodGroup: data.bloodGroup,
+            district: data.district,
+            upazila: data.upazila,
+            photoURL: data.photoURL,
           };
           axiosPublic.post("/users", userInfo).then((res) => {
             if (res.data.insertedId) {
@@ -87,8 +91,8 @@ const Register = () => {
                 </label>
                 <input
                   type="photo"
-                  name="photo"
-                  {...register("photo", { required: true })}
+                  name="photoURL"
+                  {...register("photoURL", { required: true })}
                   placeholder="photo URL"
                   className="input input-bordered"
                   required
@@ -261,7 +265,7 @@ const Register = () => {
                 </Link>
               </small>
             </p>
-            <SocialLogin/>
+            <SocialLogin />
           </div>
         </div>
       </div>
