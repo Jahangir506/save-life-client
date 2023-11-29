@@ -1,11 +1,13 @@
 import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import useAdmin from "../hooks/useAdmin";
 
-const PrivateRoutes = ({ children }) => {
+const AdminRoutes = ({ children }) => {
   const { user, loading } = useAuth();
+  const [isAdmin, isPending] = useAdmin()
   const location = useLocation();
 
-  if (loading) {
+  if (loading || isPending) {
     return (
       <div className="flex justify-center items-center h-screen">
         <progress className="progress w-56"></progress>
@@ -13,10 +15,9 @@ const PrivateRoutes = ({ children }) => {
     );
   }
 
-  if (user) {
+  if (user && isAdmin) {
     return children;
   }
-
   return <Navigate to="/login" state={{ from: location }} />;
 };
-export default PrivateRoutes;
+export default AdminRoutes;
