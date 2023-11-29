@@ -2,9 +2,10 @@ import { BiDonateBlood } from "react-icons/bi";
 import { FaHome, FaUser } from "react-icons/fa";
 import { MdOutlineBloodtype } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
+import useAdmin from "../hooks/useAdmin";
 
 const Dashboard = () => {
-  const isAdmin = true;
+  const [isAdmin] = useAdmin();
   return (
     <>
       <div className="flex">

@@ -42,7 +42,7 @@ const AllUsers = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure.delete(`/users/${user._id}`).then((res) => {
-          refetch()
+          refetch();
           if (res.data.deletedCount > 0) {
             Swal.fire({
               title: "Deleted!",
