@@ -8,8 +8,10 @@ import SocialLogin from "../SocialLogin";
 
 const Register = () => {
   const axiosPublic = useAxiosPublic();
-  const { createUser, updateUserProfile } = useAuth();
+  const {user, createUser, updateUserProfile } = useAuth();
   const navigate = useNavigate();
+
+  console.log(user);
 
   const {
     register,

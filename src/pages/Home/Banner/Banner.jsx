@@ -9,7 +9,7 @@ const Banner = () => {
         <div className="hero-content text-center text-neutral-content">
           <div className="max-w-max space-y-8">
             <h1 className="mb-5 text-5xl font-bold text-white opacity-90">
-              SMS-based platform to connect <br /> blood searchers with donors
+             Connect to Save-Life blood donation <br /> searchers with donors
             </h1>
             <p className="mb-5 max-w-xl mx-auto">
               Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
