@@ -152,7 +152,7 @@ const Register = () => {
                   >
                     <option disabled>Select</option>
                     {districts.map((district) => (
-                      <option key={district.id} value={district.division_id}>
+                      <option key={district.id}>
                         {district.name}
                       </option>
                     ))}
@@ -169,7 +169,7 @@ const Register = () => {
                   >
                     <option disabled>Select</option>
                     {upazilas.map((upazila) => (
-                      <option key={upazila.id} value={upazila.district_id}>
+                      <option key={upazila.id}>
                         {upazila.name}
                       </option>
                     ))}
@@ -286,7 +286,6 @@ const Register = () => {
                   )}
                 </div>
               </div>
-              <p className="text-red-600">{errors.confirm_pass?.message}</p>
               <div className="flex justify-start items-center gap-2 mt-2">
                 <input
                   onClick={() => setShowPass(!showPass)}
@@ -298,6 +297,7 @@ const Register = () => {
                 <span className="label-text">Show Password</span>
               </div>
               <div className="form-control mt-6">
+              <p className="text-red-600 mb-3 bg-red-50 text-center">{errors.confirm_pass?.message}</p>
                 <input
                   type="submit"
                   value="Donation Request"
