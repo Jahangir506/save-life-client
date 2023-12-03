@@ -23,8 +23,7 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-
-
+    
     signIn(data.email, data.password)
       .then((result) => {
         console.log(result.user);
@@ -148,7 +147,7 @@ const Login = () => {
             </form>
             <p className="text-center">
               <small>
-              Do not have an account?
+              Do not have an Registration?
                 <Link to="/register" className="underline text-blue-700">
                   {" "}
                   Registration for Save-Life

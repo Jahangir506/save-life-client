@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,6 +12,8 @@ const Register = () => {
   const { user, createUser, updateUserProfile } = useAuth();
   const [showPass, setShowPass] = useState(false);
   const navigate = useNavigate();
+  const [districts, setDistricts] = useState([]);
+  const [upazilas, setUpazilas] = useState([]);
 
   const {
     register,
@@ -20,6 +22,18 @@ const Register = () => {
     watch,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    fetch("/districts.json")
+      .then((res) => res.json())
+      .then((data) => setDistricts(data[2].data));
+  }, []);
+
+  useEffect(() => {
+    fetch("/upazilas.json")
+      .then((res) => res.json())
+      .then((data) => setUpazilas(data[2].data));
+  }, []);
 
   const onSubmit = (data) => {
     createUser(data.email, data.password).then((result) => {
@@ -35,6 +49,7 @@ const Register = () => {
             upazila: data.upazila,
             photoURL: data.photoURL,
           };
+          console.log(userInfo);
           axiosPublic.post("/users", userInfo).then((res) => {
             console.log(res.data);
             if (res.data.insertedId) {
@@ -136,14 +151,11 @@ const Register = () => {
                     {...register("district")}
                   >
                     <option disabled>Select</option>
-                    <option>A+</option>
-                    <option>A-</option>
-                    <option>B+</option>
-                    <option>B-</option>
-                    <option>AB+</option>
-                    <option>AB-</option>
-                    <option>O+</option>
-                    <option>O-</option>
+                    {districts.map((district) => (
+                      <option key={district.id} value={district.division_id}>
+                        {district.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className="form-control">
@@ -156,13 +168,11 @@ const Register = () => {
                     {...register("upazila")}
                   >
                     <option disabled>Select</option>
-                    <option>A-</option>
-                    <option>B+</option>
-                    <option>B-</option>
-                    <option>AB+</option>
-                    <option>AB-</option>
-                    <option>O+</option>
-                    <option>O-</option>
+                    {upazilas.map((upazila) => (
+                      <option key={upazila.id} value={upazila.district_id}>
+                        {upazila.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -192,21 +202,22 @@ const Register = () => {
                   <input
                     type={showPass ? "text" : "password"}
                     name="password"
-                    {...register("password", {
-                      required: true,
-                      minLength: 6,
-                      maxLength: 20,
-                      pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
-                    })}
+                    {...register(
+                      "password",
+                      {
+                        required: true,
+                        minLength: 6,
+                        maxLength: 20,
+                        pattern:
+                          /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
+                      }
+                    )}
                     placeholder="password"
                     className="input input-bordered w-full"
                     required
                   />
-                  {errors.password?.type === "required" && <span className="text-red-600">This field is required</span>}
                   {errors.password?.type === "required" && (
-                    <p className="text-red-600">
-                      Password must be 6 characters
-                    </p>
+                    <p className="text-red-600">This field is required</p>
                   )}
                   {errors.password?.type === "minLength" && (
                     <p className="text-red-600">
@@ -241,21 +252,47 @@ const Register = () => {
                           }
                         },
                       },
-                      { required: true }
+                      {
+                        required: true,
+                        minLength: 6,
+                        maxLength: 20,
+                        pattern:
+                          /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
+                      }
                     )}
                     placeholder="confirm password"
                     className="input input-bordered w-full"
                     required
                   />
-                  <p className="text-red-600">{errors.confirm_pass?.message}</p>
+                  {/* <p className="text-red-600">{errors.confirm_pass?.message}</p> */}
+                  {errors.confirm_pass?.type === "required" && (
+                    <p className="text-red-600">This field is required</p>
+                  )}
+                  {errors.confirm_pass?.type === "minLength" && (
+                    <p className="text-red-600">
+                      Password must be 6 characters
+                    </p>
+                  )}
+                  {errors.confirm_pass?.type === "maxLength" && (
+                    <p className="text-red-600">
+                      Password must be less then 20 characters
+                    </p>
+                  )}
+                  {errors.confirm_pass?.type === "pattern" && (
+                    <p className="text-red-600">
+                      Password must have one uppercase, one lower case, one
+                      number and one special characters
+                    </p>
+                  )}
                 </div>
               </div>
+              <p className="text-red-600">{errors.confirm_pass?.message}</p>
               <div className="flex justify-start items-center gap-2 mt-2">
                 <input
                   onClick={() => setShowPass(!showPass)}
                   type="checkbox"
                   checked={showPass ? "checked" : ""}
-                  defaultChecked
+                  readOnly
                   className="checkbox checkbox-sm checkbox-error"
                 />
                 <span className="label-text">Show Password</span>
