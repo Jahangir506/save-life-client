@@ -1,14 +1,17 @@
-import { Link } from "react-router-dom";
-import TitleSection from "/src/components/shared/TitleSection/TitleSection";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
+import useAuth from "../../../hooks/useAuth";
+import TitleSection from "/src/components/shared/TitleSection/TitleSection";
 
 const CreateDonationRequest = () => {
+    const {user} = useAuth();
+    console.log(user);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  
   const onSubmit = (data) => console.log(data);
 
   return (
@@ -18,7 +21,7 @@ const CreateDonationRequest = () => {
       </div>
       <div>
         <Helmet>
-          <title>Save-Life | Registration</title>
+          <title>Save-Life | create-donation-request</title>
         </Helmet>
         <div className="hero">
           <div className="card shadow-2xl w-full max-w-5xl bg-base-100">
@@ -33,11 +36,13 @@ const CreateDonationRequest = () => {
                   </label>
                   <input
                     type="name"
-                    name="name"
-                    {...register("name", { required: true })}
+                    name="requesterName"
+                    {...register("requesterName", { required: true })}
                     placeholder="name"
                     className="input input-bordered w-full"
                     required
+                    disabled
+                    defaultValue={user?.displayName}
                   />
                   {errors.name && (
                     <span className="text-red-600">Name is required</span>
@@ -49,11 +54,13 @@ const CreateDonationRequest = () => {
                   </label>
                   <input
                     type="email"
-                    name="email"
-                    {...register("email", { required: true })}
+                    name="requesterEmail"
+                    {...register("requesterEmail", { required: true })}
                     placeholder="email"
                     className="input input-bordered"
                     required
+                    disabled
+                    defaultValue={user?.email}
                   />
                   {errors.email && (
                     <span className="text-red-600">Email is required</span>
@@ -67,8 +74,8 @@ const CreateDonationRequest = () => {
                   </label>
                   <input
                     type="name"
-                    name="name"
-                    {...register("name", { required: true })}
+                    name="recipientName"
+                    {...register("recipientName", { required: true })}
                     placeholder="name"
                     className="input input-bordered w-full"
                     required
@@ -82,10 +89,10 @@ const CreateDonationRequest = () => {
                     <span className="label-text">Hospital Name</span>
                   </label>
                   <input
-                    type="email"
-                    name="email"
-                    {...register("email", { required: true })}
-                    placeholder="email"
+                    type="text"
+                    name="hospitalName"
+                    {...register("hospitalName", { required: true })}
+                    placeholder="hospital name"
                     className="input input-bordered"
                     required
                   />
@@ -102,7 +109,7 @@ const CreateDonationRequest = () => {
                   <select defaultValue="default"
                     className="select select-bordered w-full"
                     defaultValue="A+"
-                    {...register("bloodGroup")}
+                    {...register("district")}
                   >
                     <option disabled>Select</option>
                     <option>A+</option>
@@ -122,7 +129,7 @@ const CreateDonationRequest = () => {
                   <select
                     className="select select-bordered w-full"
                     defaultValue="Tangail"
-                    {...register("district")}
+                    {...register("upazila")}
                   >
                     <option disabled>Select</option>
                     <option>A-</option>
@@ -142,9 +149,9 @@ const CreateDonationRequest = () => {
                   </label>
                   <input
                     type="time"
-                    name="name"
-                    {...register("name", { required: true })}
-                    placeholder="name"
+                    name="time"
+                    {...register("time", { required: true })}
+                    placeholder="time"
                     className="input input-bordered w-full"
                     required
                   />
@@ -158,9 +165,9 @@ const CreateDonationRequest = () => {
                   </label>
                   <input
                     type="date"
-                    name="name"
-                    {...register("name", { required: true })}
-                    placeholder="name"
+                    name="date"
+                    {...register("date", { required: true })}
+                    placeholder="date"
                     className="input input-bordered w-full"
                     required
                   />

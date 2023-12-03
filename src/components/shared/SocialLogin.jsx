@@ -1,4 +1,4 @@
-import { FaGoogle } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
@@ -14,7 +14,8 @@ const SocialLogin = () => {
             console.log(result.user);
             const userInfo = {
                 email: result.user?.email,
-                name: result.user?.displayName
+                name: result.user?.displayName,
+                photoURL: result.user?.photoURL
             }
             axiosPublic.post('/users', userInfo)
             .then(res=> {
@@ -26,10 +27,10 @@ const SocialLogin = () => {
 
   return (
     <>
-      <div>
-        <button onClick={handleGoogle} className="btn">
-          <FaGoogle />
-          Button
+      <div className="card-body pt-3 mx-auto">
+        <button onClick={handleGoogle} className="btn w-96 hover:bg-red-200 hover:border-red-500 rounded-full">
+          <FcGoogle className="text-xl"/>
+         Registration with Google
         </button>
       </div>
     </>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,24 +9,23 @@ import SocialLogin from "../SocialLogin";
 
 const Register = () => {
   const axiosPublic = useAxiosPublic();
-  const {user, createUser, updateUserProfile } = useAuth();
+  const { user, createUser, updateUserProfile } = useAuth();
+  const [showPass, setShowPass] = useState(false);
   const navigate = useNavigate();
-
-  console.log(user);
 
   const {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
     createUser(data.email, data.password).then((result) => {
       const loggedUser = result.user;
       console.log(loggedUser);
-      updateUserProfile(data.name, data.photo)
+      updateUserProfile(data.name, data.photoURL)
         .then(() => {
           const userInfo = {
             name: data.name,
@@ -36,8 +36,8 @@ const Register = () => {
             photoURL: data.photoURL,
           };
           axiosPublic.post("/users", userInfo).then((res) => {
+            console.log(res.data);
             if (res.data.insertedId) {
-              console.log("users added database");
               reset();
               Swal.fire({
                 position: "top-end",
@@ -50,7 +50,9 @@ const Register = () => {
             }
           });
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error.message);
+        });
     });
   };
 
@@ -59,214 +61,223 @@ const Register = () => {
       <Helmet>
         <title>Save-Life | Registration</title>
       </Helmet>
-      <div className="hero min-h-screen bg-base-200">
-        <div className="hero-content flex-col lg:flex-row-reverse">
-          <div className="text-center md:w-1/2 lg:text-left">
+      <div className="hero min-h-screen bg-red-200">
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="text-center">
             <h1 className="text-5xl font-bold">Registration with Save Life!</h1>
-            <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
-            </p>
           </div>
-          <div className="card  md:w-1/2 max-w-sm shadow-2xl bg-base-100">
-            <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Name</span>
-                </label>
+          <div className="card shadow-2xl w-full max-w-4xl bg-base-100 mx-auto my-10">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="card-body w-full"
+            >
+              <div className="flex gap-6 w-full">
+                <div className="form-control w-1/2">
+                  <label className="label">
+                    <span className="label-text">Name</span>
+                  </label>
+                  <input
+                    type="name"
+                    name="name"
+                    {...register("name", { required: true })}
+                    placeholder="name"
+                    className="input input-bordered w-full"
+                    required
+                  />
+                  {errors.name && (
+                    <span className="text-red-600">Name is required</span>
+                  )}
+                </div>
+                <div className="form-control w-1/2">
+                  <label className="label">
+                    <span className="label-text">Photo</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="photoURL"
+                    {...register("photoURL", { required: true })}
+                    placeholder="photo url"
+                    className="input input-bordered"
+                    required
+                  />
+                  {errors.email && (
+                    <span className="text-red-600">Email is required</span>
+                  )}
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-6 w-full">
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Blood Group</span>
+                  </label>
+                  <select
+                    className="select select-bordered w-full"
+                    {...register("bloodGroup")}
+                    defaultValue="Select"
+                  >
+                    <option disabled>Select</option>
+                    <option>A+</option>
+                    <option>A-</option>
+                    <option>B+</option>
+                    <option>B-</option>
+                    <option>AB+</option>
+                    <option>AB-</option>
+                    <option>O+</option>
+                    <option>O-</option>
+                  </select>
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">District</span>
+                  </label>
+                  <select
+                    defaultValue="Select"
+                    className="select select-bordered w-full"
+                    {...register("district")}
+                  >
+                    <option disabled>Select</option>
+                    <option>A+</option>
+                    <option>A-</option>
+                    <option>B+</option>
+                    <option>B-</option>
+                    <option>AB+</option>
+                    <option>AB-</option>
+                    <option>O+</option>
+                    <option>O-</option>
+                  </select>
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Upazila</span>
+                  </label>
+                  <select
+                    className="select select-bordered w-full"
+                    defaultValue="Select"
+                    {...register("upazila")}
+                  >
+                    <option disabled>Select</option>
+                    <option>A-</option>
+                    <option>B+</option>
+                    <option>B-</option>
+                    <option>AB+</option>
+                    <option>AB-</option>
+                    <option>O+</option>
+                    <option>O-</option>
+                  </select>
+                </div>
+              </div>
+              <div className="flex gap-6 w-full">
+                <div className="form-control w-full">
+                  <label className="label">
+                    <span className="label-text">Email</span>
+                  </label>
+                  <input
+                    type="name"
+                    name="email"
+                    {...register("email", { required: true })}
+                    placeholder="email"
+                    className="input input-bordered w-full"
+                    required
+                  />
+                  {errors.email && (
+                    <span className="text-red-600">Name is required</span>
+                  )}
+                </div>
+              </div>
+              <div className="flex  gap-6 w-full">
+                <div className="form-control w-1/2">
+                  <label className="label">
+                    <span className="label-text">Password</span>
+                  </label>
+                  <input
+                    type={showPass ? "text" : "password"}
+                    name="password"
+                    {...register("password", {
+                      required: true,
+                      minLength: 6,
+                      maxLength: 20,
+                      pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
+                    })}
+                    placeholder="password"
+                    className="input input-bordered w-full"
+                    required
+                  />
+                  {errors.password?.type === "required" && <span className="text-red-600">This field is required</span>}
+                  {errors.password?.type === "required" && (
+                    <p className="text-red-600">
+                      Password must be 6 characters
+                    </p>
+                  )}
+                  {errors.password?.type === "minLength" && (
+                    <p className="text-red-600">
+                      Password must be 6 characters
+                    </p>
+                  )}
+                  {errors.password?.type === "maxLength" && (
+                    <p className="text-red-600">
+                      Password must be less then 20 characters
+                    </p>
+                  )}
+                  {errors.password?.type === "pattern" && (
+                    <p className="text-red-600">
+                      Password must have one uppercase, one lower case, one
+                      number and one special characters
+                    </p>
+                  )}
+                </div>
+                <div className="form-control w-1/2">
+                  <label className="label">
+                    <span className="label-text">Confirm Password</span>
+                  </label>
+                  <input
+                    type={showPass ? "text" : "password"}
+                    name="confirm_pass"
+                    {...register(
+                      "confirm_pass",
+                      {
+                        validate: (data) => {
+                          if (watch("password") !== data) {
+                            return "Password do not match";
+                          }
+                        },
+                      },
+                      { required: true }
+                    )}
+                    placeholder="confirm password"
+                    className="input input-bordered w-full"
+                    required
+                  />
+                  <p className="text-red-600">{errors.confirm_pass?.message}</p>
+                </div>
+              </div>
+              <div className="flex justify-start items-center gap-2 mt-2">
                 <input
-                  type="name"
-                  name="name"
-                  {...register("name", { required: true })}
-                  placeholder="name"
-                  className="input input-bordered"
-                  required
+                  onClick={() => setShowPass(!showPass)}
+                  type="checkbox"
+                  checked={showPass ? "checked" : ""}
+                  defaultChecked
+                  className="checkbox checkbox-sm checkbox-error"
                 />
-                {errors.name && (
-                  <span className="text-red-600">Name is required</span>
-                )}
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Photo</span>
-                </label>
-                <input
-                  type="photo"
-                  name="photoURL"
-                  {...register("photoURL", { required: true })}
-                  placeholder="photo URL"
-                  className="input input-bordered"
-                  required
-                />
-                {errors.photo && (
-                  <span className="text-red-600">Photo URL is required</span>
-                )}
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Blood Group</span>
-                </label>
-                <select
-                  className="select select-error w-full max-w-xs"
-                  defaultValue="A+"
-                  {...register("bloodGroup")}
-                >
-                  <option disabled>A+</option>
-                  <option>A-</option>
-                  <option>B+</option>
-                  <option>B-</option>
-                  <option>AB+</option>
-                  <option>AB-</option>
-                  <option>O+</option>
-                  <option>O-</option>
-                </select>
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Blood Group</span>
-                </label>
-                <select
-                  className="select select-bordered w-full max-w-xs"
-                  defaultValue="Tangail"
-                  {...register("district")}
-                >
-                  <option disabled>Tangail</option>
-                  <option>A-</option>
-                  <option>B+</option>
-                  <option>B-</option>
-                  <option>AB+</option>
-                  <option>AB-</option>
-                  <option>O+</option>
-                  <option>O-</option>
-                </select>
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Blood Group</span>
-                </label>
-                <select
-                  className="select select-bordered w-full max-w-xs"
-                  defaultValue="Gopalpur"
-                  {...register("upazila")}
-                >
-                  <option disabled>Gopalpur</option>
-                  <option>A-</option>
-                  <option>B+</option>
-                  <option>B-</option>
-                  <option>AB+</option>
-                  <option>AB-</option>
-                  <option>O+</option>
-                  <option>O-</option>
-                </select>
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email</span>
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  {...register("email", { required: true })}
-                  placeholder="email"
-                  className="input input-bordered"
-                  required
-                />
-                {errors.email && (
-                  <span className="text-red-600">Email is required</span>
-                )}
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Password</span>
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  {...register("password", {
-                    required: true,
-                    minLength: 6,
-                    maxLength: 20,
-                    pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
-                  })}
-                  placeholder="password"
-                  className="input input-bordered"
-                  required
-                />
-                {errors.password?.type === "required" && (
-                  <p className="text-red-600">Password must be 6 characters</p>
-                )}
-                {errors.password?.type === "minLength" && (
-                  <p className="text-red-600">Password must be 6 characters</p>
-                )}
-                {errors.password?.type === "maxLength" && (
-                  <p className="text-red-600">
-                    Password must be less then 20 characters
-                  </p>
-                )}
-                {errors.password?.type === "pattern" && (
-                  <p className="text-red-600">
-                    Password must have one uppercase, one lower case, one number
-                    and one special characters
-                  </p>
-                )}
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Confirm Password</span>
-                </label>
-                <input
-                  type="password"
-                  name="confirm_password"
-                  {...register("confirm_password", {
-                    required: true,
-                    minLength: 6,
-                    maxLength: 20,
-                    pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
-                  })}
-                  placeholder="confirm_password"
-                  className="input input-bordered"
-                  required
-                />
-                {errors.confirm_password?.type === "required" && (
-                  <p className="text-red-600">Password must be 6 characters</p>
-                )}
-                {errors.confirm_password?.type === "minLength" && (
-                  <p className="text-red-600">Password must be 6 characters</p>
-                )}
-                {errors.confirm_password?.type === "maxLength" && (
-                  <p className="text-red-600">
-                    Password must be less then 20 characters
-                  </p>
-                )}
-                {errors.confirm_password?.type === "pattern" && (
-                  <p className="text-red-600">
-                    Password must have one uppercase, one lower case, one number
-                    and one special characters
-                  </p>
-                )}
-                <label className="label">
-                  <a href="#" className="label-text-alt link link-hover">
-                    Forgot password?
-                  </a>
-                </label>
+                <span className="label-text">Show Password</span>
               </div>
               <div className="form-control mt-6">
                 <input
                   type="submit"
-                  value="Registration"
-                  className="btn btn-primary"
+                  value="Donation Request"
+                  className="btn bg-red-500 text-white px-6 hover:bg-black rounded-none border-none"
                 />
               </div>
             </form>
-            <p>
+            <p className="text-center">
               <small>
-                New Here?
-                <Link to="/login" className="hover:underline text-blue-700">
-                  Already Login
+                Already have an Registration?
+                <Link to="/login" className="underline text-blue-700">
+                  {" "}
+                  Login here
                 </Link>
               </small>
             </p>
+            <div className="divider">OR</div>
             <SocialLogin />
           </div>
         </div>

@@ -1,9 +1,15 @@
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const DonationRequest = () => {
+  const {user} = useAuth()
   return (
     <>
-      <div className="my-20">
+    <Helmet>
+      <title>Save-Life | Donation Request</title>
+    </Helmet>
+      <div className="py-36 max-w-7xl mx-auto">
         <div className="bg-[#F0412E] py-4 w-full">
           <h2 className="text-center text-white text-2xl">
             Available blood donors
@@ -31,7 +37,7 @@ const DonationRequest = () => {
                     <div className="avatar">
                       <div className="mask mask-squircle w-12 h-12">
                         <img
-                          src="/tailwind-css-component-profile-2@56w.png"
+                          src={user?.photoURL}
                           alt="Avatar Tailwind CSS Component"
                         />
                       </div>

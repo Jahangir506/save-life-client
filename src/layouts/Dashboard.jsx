@@ -1,13 +1,16 @@
 import { BiDonateBlood } from "react-icons/bi";
 import { FaHome, FaUser } from "react-icons/fa";
 import { MdOutlineBloodtype } from "react-icons/md";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
+import { Helmet } from "react-helmet-async";
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
+
   return (
     <>
+    <Helmet><title>Save-Life | dashboard-home</title></Helmet>
       <div className="flex">
         <div className="w-72 min-h-screen bg-red-500 text-white">
           <ul className="menu">

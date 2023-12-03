@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import DonationRequest from "../components/DonationRequest/DonationRequest";
 import Login from "../components/shared/Login/Login";
 import Register from "../components/shared/Register/Register";
 import Dashboard from "../layouts/Dashboard";
@@ -9,6 +10,7 @@ import AdminHome from "../pages/Dashboard/Admin/AdminHome";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import CreateDonationRequest from "../pages/Dashboard/Users/CreateDonationRequest";
 import MyDonationRequest from "../pages/Dashboard/Users/MyDonationRequest";
+import UserHome from "../pages/Dashboard/Users/UserHome";
 import Home from "../pages/Home/Home";
 import SearchDonors from "../pages/SearchDonors/SearchDonors";
 import PrivateRoutes from "./PrivateRoutes";
@@ -40,7 +42,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/donationRequest",
-        element: <SearchDonors />,
+        element: <DonationRequest/>,
       },
       {
         path: "/donationDetails",
@@ -65,16 +67,20 @@ export const router = createBrowserRouter([
         element: <AdminHome/>
       },
       {
+        path: 'all-users',
+        element: <AllUsers/>
+      },
+      {
+        path: 'users-home',
+        element: <UserHome/>
+      },
+      {
         path: "my-donation-requests",
         element: <MyDonationRequest />,
       },
       {
         path: "create-donation-request",
         element: <CreateDonationRequest />,
-      },
-      {
-        path: 'all-users',
-        element: <AllUsers/>
       }
     ],
   },
