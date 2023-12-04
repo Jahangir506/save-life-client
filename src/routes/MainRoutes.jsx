@@ -10,12 +10,16 @@ import AdminHome from "../pages/Dashboard/Admin/AdminHome";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import CreateDonationRequest from "../pages/Dashboard/Users/CreateDonationRequest";
 import MyDonationRequest from "../pages/Dashboard/Users/MyDonationRequest";
-import UserHome from "../pages/Dashboard/Users/UserHome";
+import UserHome from "../pages/Dashboard/Users/MyProfile";
+import AllBloodDonationRequest from "../pages/Dashboard/Volunteer/AllBloodDonationRequest";
+import ContentManagement from "../pages/Dashboard/Volunteer/ContentManagement";
+import VolunteerHome from "../pages/Dashboard/Volunteer/VolunteerHome";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
 import SearchDonors from "../pages/SearchDonors/SearchDonors";
-import PrivateRoutes from "./PrivateRoutes";
 import AdminRoutes from "./AdminRoutes";
+import PrivateRoutes from "./PrivateRoutes";
+import VolunteerRoutes from "./VolunteerRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -96,6 +100,30 @@ export const router = createBrowserRouter([
       {
         path: "create-donation-request",
         element: <CreateDonationRequest />,
+      },
+      {
+        path: "volunteer-home",
+        element: (
+          <VolunteerRoutes>
+            <VolunteerHome />
+          </VolunteerRoutes>
+        ),
+      },
+      {
+        path: "all-blood-donation-request",
+        element: (
+          <VolunteerRoutes>
+            <AllBloodDonationRequest />
+          </VolunteerRoutes>
+        ),
+      },
+      {
+        path: "content-management",
+        element: (
+          <VolunteerRoutes>
+            <ContentManagement />
+          </VolunteerRoutes>
+        ),
       },
     ],
   },

@@ -29,6 +29,21 @@ const AllUsers = () => {
       }
     });
   };
+  const handleVolunteer = (user) => {
+    axiosSecure.patch(`/users/volunteer/${user._id}`).then((res) => {
+      console.log(res.data);
+      if (res.data.modifiedCount > 0) {
+        refetch();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `${user.name} is an Volunteer Now!`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+  };
 
   const handleUserDelete = (user) => {
     Swal.fire({
@@ -71,7 +86,8 @@ const AllUsers = () => {
                   <th>Name</th>
                   <th>Email</th>
                   <th>Status</th>
-                  <th>Role</th>
+                  <th>Admin</th>
+                  <th>Volunteer</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -100,6 +116,18 @@ const AllUsers = () => {
                       ) : (
                         <button
                           onClick={() => handleAdmin(user)}
+                          className="btn text-red-500 bg-red-200 hover:bg-black hover:text-white text-base btn-sm"
+                        >
+                          <FaUsers />
+                        </button>
+                      )}
+                    </th>
+                    <th>
+                      {user.role === "volunteer" ? (
+                        "Volunteer"
+                      ) : (
+                        <button
+                          onClick={() => handleVolunteer(user)}
                           className="btn text-red-500 bg-red-200 hover:bg-black hover:text-white text-base btn-sm"
                         >
                           <FaUsers />

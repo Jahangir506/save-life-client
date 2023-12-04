@@ -1,12 +1,14 @@
+import { Helmet } from "react-helmet-async";
 import { BiDonateBlood } from "react-icons/bi";
 import { FaHome, FaUser } from "react-icons/fa";
 import { MdOutlineBloodtype } from "react-icons/md";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
-import { Helmet } from "react-helmet-async";
+import useVolunteer from "../hooks/useVolunteer";
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
+  const [isVolunteer] = useVolunteer()
 
   return (
     <>
@@ -38,7 +40,25 @@ const Dashboard = () => {
                   </NavLink>
                 </li>
               </>
-            ) : (
+            ) : isVolunteer ? 
+            <>
+             <li>
+                  <NavLink to="/dashboard/volunteer-home">
+                    <FaUser />
+                    Volunteer Home
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/all-blood-donation-request">
+                    <BiDonateBlood /> All Blood Donation Request
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/content-management">
+                    <MdOutlineBloodtype /> Content Management
+                  </NavLink>
+                </li>
+            </> :  (
               <>
                 <li>
                   <NavLink to="/dashboard/users-home">
