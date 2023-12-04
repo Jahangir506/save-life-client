@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useDistrictsUpazilas from "../../../hooks/useDistrictsUpazilas";
 import SocialLogin from "../SocialLogin";
 
 const Register = () => {
   const axiosPublic = useAxiosPublic();
   const { user, createUser, updateUserProfile } = useAuth();
+  const [districts, upazilas] = useDistrictsUpazilas();
   const [showPass, setShowPass] = useState(false);
   const navigate = useNavigate();
-  const [districts, setDistricts] = useState([]);
-  const [upazilas, setUpazilas] = useState([]);
 
   const {
     register,
@@ -22,18 +22,6 @@ const Register = () => {
     watch,
     formState: { errors },
   } = useForm();
-
-  useEffect(() => {
-    fetch("/districts.json")
-      .then((res) => res.json())
-      .then((data) => setDistricts(data[2].data));
-  }, []);
-
-  useEffect(() => {
-    fetch("/upazilas.json")
-      .then((res) => res.json())
-      .then((data) => setUpazilas(data[2].data));
-  }, []);
 
   const onSubmit = (data) => {
     createUser(data.email, data.password).then((result) => {
@@ -152,9 +140,7 @@ const Register = () => {
                   >
                     <option disabled>Select</option>
                     {districts.map((district) => (
-                      <option key={district.id}>
-                        {district.name}
-                      </option>
+                      <option key={district.id}>{district.name}</option>
                     ))}
                   </select>
                 </div>
@@ -169,9 +155,7 @@ const Register = () => {
                   >
                     <option disabled>Select</option>
                     {upazilas.map((upazila) => (
-                      <option key={upazila.id}>
-                        {upazila.name}
-                      </option>
+                      <option key={upazila.id}>{upazila.name}</option>
                     ))}
                   </select>
                 </div>
@@ -202,16 +186,13 @@ const Register = () => {
                   <input
                     type={showPass ? "text" : "password"}
                     name="password"
-                    {...register(
-                      "password",
-                      {
-                        required: true,
-                        minLength: 6,
-                        maxLength: 20,
-                        pattern:
-                          /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
-                      }
-                    )}
+                    {...register("password", {
+                      required: true,
+                      minLength: 6,
+                      maxLength: 20,
+                      pattern:
+                        /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
+                    })}
                     placeholder="password"
                     className="input input-bordered w-full"
                     required
@@ -297,7 +278,9 @@ const Register = () => {
                 <span className="label-text">Show Password</span>
               </div>
               <div className="form-control mt-6">
-              <p className="text-red-600 mb-3 bg-red-50 text-center">{errors.confirm_pass?.message}</p>
+                <p className="text-red-600 mb-3 bg-red-50 text-center">
+                  {errors.confirm_pass?.message}
+                </p>
                 <input
                   type="submit"
                   value="Donation Request"

@@ -1,18 +1,37 @@
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useDistrictsUpazilas from "../../../hooks/useDistrictsUpazilas";
 import TitleSection from "/src/components/shared/TitleSection/TitleSection";
+import Swal from "sweetalert2";
 
 const CreateDonationRequest = () => {
-    const {user} = useAuth();
-    console.log(user);
+  const axiosPublic = useAxiosPublic()
+  const [districts, upazilas] = useDistrictsUpazilas();
+  const { user } = useAuth();
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
-  
-  const onSubmit = (data) => console.log(data);
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    const createDonReq = await axiosPublic.post("/createDonationRequest", data)
+    if(createDonReq.data.insertedId){
+      reset()
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Create Donation Request Successfully",
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+  };
 
   return (
     <>
@@ -38,13 +57,12 @@ const CreateDonationRequest = () => {
                     type="name"
                     name="requesterName"
                     {...register("requesterName", { required: true })}
-                    placeholder="name"
+                    placeholder="requester name"
                     className="input input-bordered w-full"
                     required
-                    disabled
                     defaultValue={user?.displayName}
                   />
-                  {errors.name && (
+                  {errors.requesterName && (
                     <span className="text-red-600">Name is required</span>
                   )}
                 </div>
@@ -59,10 +77,9 @@ const CreateDonationRequest = () => {
                     placeholder="email"
                     className="input input-bordered"
                     required
-                    disabled
                     defaultValue={user?.email}
                   />
-                  {errors.email && (
+                  {errors.requesterEmail && (
                     <span className="text-red-600">Email is required</span>
                   )}
                 </div>
@@ -80,7 +97,7 @@ const CreateDonationRequest = () => {
                     className="input input-bordered w-full"
                     required
                   />
-                  {errors.name && (
+                  {errors.recipientName && (
                     <span className="text-red-600">Name is required</span>
                   )}
                 </div>
@@ -96,7 +113,7 @@ const CreateDonationRequest = () => {
                     className="input input-bordered"
                     required
                   />
-                  {errors.email && (
+                  {errors.hospitalName && (
                     <span className="text-red-600">Email is required</span>
                   )}
                 </div>
@@ -106,20 +123,15 @@ const CreateDonationRequest = () => {
                   <label className="label">
                     <span className="label-text">District</span>
                   </label>
-                  <select defaultValue="default"
+                  <select
                     className="select select-bordered w-full"
-                    defaultValue="A+"
+                    defaultValue="Select"
                     {...register("district")}
                   >
                     <option disabled>Select</option>
-                    <option>A+</option>
-                    <option>A-</option>
-                    <option>B+</option>
-                    <option>B-</option>
-                    <option>AB+</option>
-                    <option>AB-</option>
-                    <option>O+</option>
-                    <option>O-</option>
+                    {districts.map((district) => (
+                      <option key={district.id}>{district.name}</option>
+                    ))}
                   </select>
                 </div>
                 <div className="form-control w-1/2">
@@ -128,17 +140,13 @@ const CreateDonationRequest = () => {
                   </label>
                   <select
                     className="select select-bordered w-full"
-                    defaultValue="Tangail"
+                    defaultValue="Select"
                     {...register("upazila")}
                   >
                     <option disabled>Select</option>
-                    <option>A-</option>
-                    <option>B+</option>
-                    <option>B-</option>
-                    <option>AB+</option>
-                    <option>AB-</option>
-                    <option>O+</option>
-                    <option>O-</option>
+                    {upazilas.map((upazila) => (
+                      <option key={upazila.id}>{upazila.name}</option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -155,7 +163,7 @@ const CreateDonationRequest = () => {
                     className="input input-bordered w-full"
                     required
                   />
-                  {errors.name && (
+                  {errors.time && (
                     <span className="text-red-600">Name is required</span>
                   )}
                 </div>
@@ -171,18 +179,24 @@ const CreateDonationRequest = () => {
                     className="input input-bordered w-full"
                     required
                   />
-                  {errors.name && (
+                  {errors.date && (
                     <span className="text-red-600">Name is required</span>
                   )}
                 </div>
               </div>
               <div className="flex  gap-6 w-full">
-              <div className="form-control w-1/2">
+                <div className="form-control w-1/2">
                   <label className="label">
                     <span className="label-text">Full Address</span>
                   </label>
-                  <textarea className="textarea textarea-bordered" placeholder="address"></textarea>
-                  {errors.name && (
+                  <textarea
+                    type="text"
+                    name="address"
+                    {...register("address")}
+                    className="textarea textarea-bordered"
+                    placeholder="address"
+                  ></textarea>
+                  {errors.address && (
                     <span className="text-red-600">Name is required</span>
                   )}
                 </div>
@@ -190,8 +204,14 @@ const CreateDonationRequest = () => {
                   <label className="label">
                     <span className="label-text">Request Message</span>
                   </label>
-                  <textarea className="textarea textarea-bordered" placeholder="Message"></textarea>
-                  {errors.name && (
+                  <textarea
+                    type="text"
+                    name="reqMessage"
+                    {...register("reqMessage")}
+                    className="textarea textarea-bordered"
+                    placeholder="Message"
+                  ></textarea>
+                  {errors.reqMessage && (
                     <span className="text-red-600">Name is required</span>
                   )}
                 </div>

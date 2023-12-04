@@ -2,18 +2,20 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { FcGallery } from "react-icons/fc";
 import { IoSearch } from "react-icons/io5";
+import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
+import useAxiosPublic from '../../hooks/useAxiosPublic';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 import BlogContent from "./BlogContent";
 import LeftSideBar from "./LeftSideBar";
 import RightSideBar from "./RightSideBar";
-import useAxiosPublic from '../../hooks/useAxiosPublic'
-import useAxiosSecure from '../../hooks/useAxiosSecure'
-import Swal from "sweetalert2";
-import useAuth from "../../hooks/useAuth";
 
  const image_hosting_key = import.meta.env.VITE_IMAGE_HOST_KEY;
  const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 
 const Blogs = () => {
+  // const editor = useRef(null)
+  // const [post, setPost]= useState();
   const {user}= useAuth();
   const axiosPublic = useAxiosPublic()
   const axiosSecure = useAxiosSecure()
@@ -26,7 +28,6 @@ const Blogs = () => {
   } = useForm();
 
   const onSubmit =async (data) => {
-    console.log(data);
     const imageFile = {image: data.images[0]}
     const res = await axiosPublic.post(image_hosting_api, imageFile, {
       headers: {
@@ -44,7 +45,6 @@ const Blogs = () => {
         userPostTime: user.metadata.creationTime
       }
       const blogs = await axiosSecure.post('/blogs', blogsUser)
-      console.log(blogs.data);
       if(blogs.data.insertedId){
         reset()
         Swal.fire({
@@ -73,7 +73,7 @@ const Blogs = () => {
                   <div>
                     <div className="avatar">
                       <div className="w-16 rounded-full">
-                        <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                        <img src={user?.photoURL}/>
                       </div>
                     </div>
                   </div>
@@ -165,6 +165,10 @@ const Blogs = () => {
                               className="textarea textarea-bordered w-full h-28"
                               placeholder="write somethings..."
                             ></textarea>
+                            {/* <JoditEditor
+                                ref={editor}
+                                {...register("postDetails", { required: true })}
+                            /> */}
                           </div>
                         </div>
                       </div>
@@ -251,13 +255,13 @@ const Blogs = () => {
           </div>
           <div className="my-8">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 ">
-              <div className="border border-rose-500">
+              <div className="">
                 <LeftSideBar />
               </div>
-              <div className="md:col-span-2 border border-rose-500">
+              <div className="md:col-span-2">
                 <BlogContent />
               </div>
-              <div className="border border-rose-500">
+              <div className="">
                 <RightSideBar />
               </div>
             </div>
