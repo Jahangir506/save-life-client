@@ -10,7 +10,7 @@ import SocialLogin from "../SocialLogin";
 
 const Register = () => {
   const axiosPublic = useAxiosPublic();
-  const { user, createUser, updateUserProfile } = useAuth();
+  const { createUser, updateUserProfile } = useAuth();
   const [districts, upazilas] = useDistrictsUpazilas();
   const [showPass, setShowPass] = useState(false);
   const navigate = useNavigate();

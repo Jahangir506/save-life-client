@@ -5,9 +5,11 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useDistrictsUpazilas from "../../../hooks/useDistrictsUpazilas";
 import TitleSection from "/src/components/shared/TitleSection/TitleSection";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const CreateDonationRequest = () => {
   const axiosPublic = useAxiosPublic()
+  const navigate = useNavigate()
   const [districts, upazilas] = useDistrictsUpazilas();
   const { user } = useAuth();
 
@@ -19,8 +21,21 @@ const CreateDonationRequest = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
-    const createDonReq = await axiosPublic.post("/createDonationRequest", data)
+    const createDonationReq = {
+      address: data.address,
+      date: data.date,
+      district: data.district,
+      hospitalName: data.hospitalName,
+      recipientName: data.recipientName,
+      reqMessage: data.reqMessage,
+      requesterEmail: data.requesterEmail,
+      requesterName: data.requesterName,
+      time: data.time,
+      upazila: data.upazila,
+      photo: user?.photoURL
+    }
+    console.log(createDonationReq);
+    const createDonReq = await axiosPublic.post("/createDonationRequest", createDonationReq)
     if(createDonReq.data.insertedId){
       reset()
       Swal.fire({
@@ -30,6 +45,7 @@ const CreateDonationRequest = () => {
         showConfirmButton: false,
         timer: 1500
       });
+    navigate('/')
     }
   };
 
