@@ -63,7 +63,7 @@ const Dashboard = () => {
                 <li>
                   <NavLink to="/dashboard/users-home">
                     <FaUser />
-                    Users Home
+                    My Profile
                   </NavLink>
                 </li>
                 <li>

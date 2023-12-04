@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 
-const MyProfile = () => {
+const UserHome = () => {
     return(
         <>
         <Helmet>
@@ -9,4 +9,4 @@ const MyProfile = () => {
              <h1> HELLO I Am UserHome </h1>
         </>
     )}
-export default MyProfile;
+export default UserHome;
