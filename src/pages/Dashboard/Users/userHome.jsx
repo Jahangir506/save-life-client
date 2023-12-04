@@ -1,12 +1,17 @@
 import { Helmet } from "react-helmet-async";
+import useAuth from "../../../hooks/useAuth";
 
 const UserHome = () => {
-    return(
-        <>
+  const { user } = useAuth();
+  return (
+    <>
+      <div>
         <Helmet>
-            <title>Save-Life | user-home</title>
+          <title>Save-Life | user-home</title>
         </Helmet>
-             <h1> HELLO I Am UserHome </h1>
-        </>
-    )}
+        {user?.displayName ? user.displayName : "I am Back"}
+      </div>
+    </>
+  );
+};
 export default UserHome;

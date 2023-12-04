@@ -18,7 +18,6 @@ const Login = () => {
     register,
     handleSubmit,
     reset,
-    watch,
     formState: { errors },
   } = useForm();
 
@@ -129,7 +128,7 @@ const Login = () => {
                   onClick={() => setShowPass(!showPass)}
                   type="checkbox"
                   checked={showPass ? "checked" : ""}
-                  defaultChecked
+                  readOnly
                   className="checkbox checkbox-sm checkbox-error"
                 />
                 <span className="label-text text-sm">Show Password</span>

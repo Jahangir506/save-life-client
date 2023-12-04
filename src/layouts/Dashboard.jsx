@@ -8,11 +8,13 @@ import useVolunteer from "../hooks/useVolunteer";
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
-  const [isVolunteer] = useVolunteer()
+  const [isVolunteer] = useVolunteer();
 
   return (
     <>
-    <Helmet><title>Save-Life | dashboard-home</title></Helmet>
+      <Helmet>
+        <title>Save-Life | dashboard-home</title>
+      </Helmet>
       <div className="flex">
         <div className="w-72 min-h-screen bg-red-500 text-white">
           <ul className="menu">
@@ -40,12 +42,12 @@ const Dashboard = () => {
                   </NavLink>
                 </li>
               </>
-            ) : isVolunteer ? 
-            <>
-             <li>
+            ) : isVolunteer ? (
+              <>
+                <li>
                   <NavLink to="/dashboard/volunteer-home">
                     <FaUser />
-                    Volunteer Home
+                   Volunteer Home
                   </NavLink>
                 </li>
                 <li>
@@ -58,12 +60,13 @@ const Dashboard = () => {
                     <MdOutlineBloodtype /> Content Management
                   </NavLink>
                 </li>
-            </> :  (
+              </>
+            ) : (
               <>
                 <li>
                   <NavLink to="/dashboard/users-home">
                     <FaUser />
-                    My Profile
+                    User Home
                   </NavLink>
                 </li>
                 <li>

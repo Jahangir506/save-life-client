@@ -4,10 +4,10 @@ import useVolunteer from "../hooks/useVolunteer";
 
 const VolunteerRoutes = ({children}) => {
   const { user, loading } = useAuth();
-  const [isVolunteer, isPending] = useVolunteer();
+  const [isVolunteer, isVolunteerLoading] = useVolunteer();
   const location = useLocation();
 
-  if (loading || isPending) {
+  if (loading || isVolunteerLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <progress className="progress w-56"></progress>

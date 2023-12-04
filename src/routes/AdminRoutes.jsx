@@ -4,10 +4,10 @@ import useAdmin from "../hooks/useAdmin";
 
 const AdminRoutes = ({ children }) => {
   const { user, loading } = useAuth();
-  const [isAdmin, isPending] = useAdmin()
+  const [isAdmin, isAdminPending] = useAdmin()
   const location = useLocation();
 
-  if (loading || isPending) {
+  if (loading || isAdminPending) {
     return (
       <div className="flex justify-center items-center h-screen">
         <progress className="progress w-56"></progress>

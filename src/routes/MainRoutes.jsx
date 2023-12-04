@@ -6,6 +6,7 @@ import Dashboard from "../layouts/Dashboard";
 import MainLayouts from "../layouts/MainLayouts";
 import Blogs from "../pages/Blogs/Blogs";
 import BloodDonationDetails from "../pages/BloodDonationDetails/BloodDonationDetails";
+import AdminContentManage from "../pages/Dashboard/Admin/AdminContentManage";
 import AdminHome from "../pages/Dashboard/Admin/AdminHome";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import CreateDonationRequest from "../pages/Dashboard/Users/CreateDonationRequest";
@@ -59,9 +60,7 @@ export const router = createBrowserRouter([
           </PrivateRoutes>
         ),
         loader: ({ params }) =>
-          fetch(
-            `https://save-life-server.vercel.app/createDonationRequest/${params.id}`
-          ),
+          fetch(`https://save-life-server.vercel.app/createDonationRequest/${params.id}`),
       },
     ],
   },
@@ -86,6 +85,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoutes>
             <AllUsers />
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "content-management",
+        element: (
+          <AdminRoutes>
+            <AdminContentManage />
           </AdminRoutes>
         ),
       },
