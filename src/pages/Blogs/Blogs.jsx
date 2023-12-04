@@ -1,8 +1,63 @@
 import { Helmet } from "react-helmet-async";
+import { useForm } from "react-hook-form";
 import { FcGallery } from "react-icons/fc";
 import { IoSearch } from "react-icons/io5";
+import BlogContent from "./BlogContent";
+import LeftSideBar from "./LeftSideBar";
+import RightSideBar from "./RightSideBar";
+import useAxiosPublic from '../../hooks/useAxiosPublic'
+import useAxiosSecure from '../../hooks/useAxiosSecure'
+import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
+
+ const image_hosting_key = import.meta.env.VITE_IMAGE_HOST_KEY;
+ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 
 const Blogs = () => {
+  const {user}= useAuth();
+  const axiosPublic = useAxiosPublic()
+  const axiosSecure = useAxiosSecure()
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit =async (data) => {
+    console.log(data);
+    const imageFile = {image: data.images[0]}
+    const res = await axiosPublic.post(image_hosting_api, imageFile, {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    })
+    if(res.data.success){
+      const blogsUser = {
+        title: data.title,
+        postType: data.postType,
+        postDetails: data.postDetails,
+        images: res.data.data.display_url,
+        userName: user.displayName,
+        userPhoto: user.photoURL,
+        userPostTime: user.metadata.creationTime
+      }
+      const blogs = await axiosSecure.post('/blogs', blogsUser)
+      console.log(blogs.data);
+      if(blogs.data.insertedId){
+        reset()
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Post Successfully",
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    }
+  };
+
   return (
     <>
       <div className="max-w-7xl mx-auto">
@@ -55,16 +110,37 @@ const Blogs = () => {
                     id="my_modal_5"
                     className="modal modal-bottom sm:modal-middle"
                   >
-                    <div className="modal-box">
+                    <form
+                      onSubmit={handleSubmit(onSubmit)}
+                      className="modal-box"
+                    >
                       <div>
                         <div className="flex gap-4">
+                          <div className="form-control w-1/2">
+                            <label className="label">
+                              <span className="label-text">Title</span>
+                            </label>
+                            <input
+                              type="name"
+                              name="title"
+                              {...register("title", { required: true })}
+                              placeholder="title"
+                              className="input input-bordered w-full"
+                              required
+                            />
+                            {errors.title && (
+                              <span className="text-red-600">
+                                Name is required
+                              </span>
+                            )}
+                          </div>
                           <div className="form-control w-1/2">
                             <label className="label">
                               <span className="label-text">Post Type</span>
                             </label>
                             <select
                               className="select select-bordered w-full"
-                              // {...register("bloodGroup")}
+                              {...register("postType", { required: true })}
                               defaultValue="Select"
                             >
                               <option disabled>Select</option>
@@ -78,31 +154,14 @@ const Blogs = () => {
                               <option>O-</option>
                             </select>
                           </div>
-                          <div className="form-control w-1/2">
-                            <label className="label">
-                              <span className="label-text">Title</span>
-                            </label>
-                            <input
-                              type="name"
-                              name="name"
-                              //   {...register("name", { required: true })}
-                              placeholder="title"
-                              className="input input-bordered w-full"
-                              required
-                            />
-                            {/* {errors.name && (
-                              <span className="text-red-600">
-                                Name is required
-                              </span>
-                            )} */}
-                          </div>
                         </div>
                         <div className="flex gap-4">
                           <div className="form-control w-full">
                             <label className="label">
-                              <span className="label-text">Content</span>
+                              <span className="label-text">Details</span>
                             </label>
                             <textarea
+                              {...register("postDetails", { required: true })}
                               className="textarea textarea-bordered w-full h-28"
                               placeholder="write somethings..."
                             ></textarea>
@@ -111,19 +170,15 @@ const Blogs = () => {
                       </div>
                       <div className="flex items-center justify-between my-8">
                         <div className="flex items-center">
-                          <FcGallery
-                            onClick={() =>
-                              document.getElementById("my_modal_5").showModal()
-                            }
-                            className="text-4xl mr-1"
-                          />
-                          <p>Photo/Videos</p>
+                        <input type="file" {...register('images', { required: true })} className="file-input file-input-bordered file-input-error file-input-xs w-full max-w-xs" />
                         </div>
-                        <button className="px-4 font-medium py-2 text-sm hover:bg-black text-white bg-red-500 border-none uppercase hover:text-white rounded-full">
-                          Submit Post
-                        </button>
+                        <input
+                          type="submit"
+                          value="Submit Post"
+                          className="px-4 font-medium py-2 text-sm hover:bg-black text-white bg-red-500 border-none uppercase hover:text-white rounded-full"
+                        ></input>
                       </div>
-                    </div>
+                    </form>
                     <form method="dialog" className="modal-backdrop">
                       <button>close</button>
                     </form>
@@ -192,45 +247,18 @@ const Blogs = () => {
                 name="options"
                 aria-label="Radio 2"
               />
-              <input
-                className="join-item btn whitespace-nowrap min-w-full rounded-full"
-                type="radio"
-                name="options"
-                aria-label="Radio 3"
-              />
-              <input
-                className="join-item btn whitespace-nowrap min-w-full rounded-full"
-                type="radio"
-                name="options"
-                aria-label="Radio 1"
-              />
-              <input
-                className="join-item btn whitespace-nowrap min-w-full rounded-full"
-                type="radio"
-                name="options"
-                aria-label="Radio 2"
-              />
-              <input
-                className="join-item btn whitespace-nowrap min-w-full rounded-full"
-                type="radio"
-                name="options"
-                aria-label="Radio 3"
-              />
             </div>
           </div>
           <div className="my-8">
-            <div className="grid grid-cols-3 gap-8 justify-items-center items-center">
-              <div className="w-1/3 border border-rose-500">
-                <h3>Home</h3>
-                <h3>Profile</h3>
-                <h3>Create Post</h3>
-                <h3></h3>
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 ">
+              <div className="border border-rose-500">
+                <LeftSideBar />
               </div>
-              <div className="flex-1 border border-rose-500">
-                <div>ddkfdhkfgaadsgdfg</div>
+              <div className="md:col-span-2 border border-rose-500">
+                <BlogContent />
               </div>
-              <div className="w-1/3 border border-rose-500">
-                <h1>dflkdfhdgkf</h1>
+              <div className="border border-rose-500">
+                <RightSideBar />
               </div>
             </div>
           </div>
