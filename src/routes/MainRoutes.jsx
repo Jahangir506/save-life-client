@@ -51,7 +51,7 @@ export const router = createBrowserRouter([
             <BloodDonationDetails />
           </PrivateRoutes>
         ),
-        loader: ({params})=> fetch(`http://localhost:5000/createDonationRequest/${params.id}`)
+        loader: ({params})=> fetch(`save-life-server.vercel.app/createDonationRequest/${params.id}`)
       },
     ],
   },
