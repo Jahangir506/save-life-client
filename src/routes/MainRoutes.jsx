@@ -45,12 +45,13 @@ export const router = createBrowserRouter([
         element: <DonationRequest/>,
       },
       {
-        path: "/donationDetails",
+        path: "/createDonationRequest/:id",
         element: (
           <PrivateRoutes>
             <BloodDonationDetails />
           </PrivateRoutes>
         ),
+        loader: ({params})=> fetch(`http://localhost:5000/createDonationRequest/${params.id}`)
       },
     ],
   },
