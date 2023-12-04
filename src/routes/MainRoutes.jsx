@@ -11,14 +11,17 @@ import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import CreateDonationRequest from "../pages/Dashboard/Users/CreateDonationRequest";
 import MyDonationRequest from "../pages/Dashboard/Users/MyDonationRequest";
 import UserHome from "../pages/Dashboard/Users/UserHome";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
 import SearchDonors from "../pages/SearchDonors/SearchDonors";
 import PrivateRoutes from "./PrivateRoutes";
+import AdminRoutes from "./AdminRoutes";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayouts />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -42,7 +45,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/donationRequest",
-        element: <DonationRequest/>,
+        element: <DonationRequest />,
       },
       {
         path: "/createDonationRequest/:id",
@@ -51,7 +54,10 @@ export const router = createBrowserRouter([
             <BloodDonationDetails />
           </PrivateRoutes>
         ),
-        loader: ({params})=> fetch(`save-life-server.vercel.app/createDonationRequest/${params.id}`)
+        loader: ({ params }) =>
+          fetch(
+            `https://save-life-server.vercel.app/createDonationRequest/${params.id}`
+          ),
       },
     ],
   },
@@ -64,16 +70,24 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: 'admin-home',
-        element: <AdminHome/>
+        path: "admin-home",
+        element: (
+          <AdminRoutes>
+            <AdminHome />
+          </AdminRoutes>
+        ),
       },
       {
-        path: 'all-users',
-        element: <AllUsers/>
+        path: "all-users",
+        element: (
+          <AdminRoutes>
+            <AllUsers />
+          </AdminRoutes>
+        ),
       },
       {
-        path: 'users-home',
-        element: <UserHome/>
+        path: "users-home",
+        element: <UserHome />,
       },
       {
         path: "my-donation-requests",
@@ -82,7 +96,7 @@ export const router = createBrowserRouter([
       {
         path: "create-donation-request",
         element: <CreateDonationRequest />,
-      }
+      },
     ],
   },
 ]);
