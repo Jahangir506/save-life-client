@@ -37,7 +37,7 @@ const Dashboard = () => {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/dashboard/content-management">
+                  <NavLink to="/dashboard/admin-content-management">
                     <MdOutlineBloodtype /> Content Management
                   </NavLink>
                 </li>

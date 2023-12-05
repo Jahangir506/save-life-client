@@ -89,10 +89,18 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "content-management",
+        path: "admin-content-management",
         element: (
           <AdminRoutes>
             <AdminContentManage />
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "/dashboard/content-management/add-blog",
+        element: (
+          <AdminRoutes>
+           <Blogs/>
           </AdminRoutes>
         ),
       },

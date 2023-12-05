@@ -1,25 +1,24 @@
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { FcGallery } from "react-icons/fc";
 import { IoSearch } from "react-icons/io5";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
-import useAxiosPublic from '../../hooks/useAxiosPublic';
-import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import BlogContent from "./BlogContent";
 import LeftSideBar from "./LeftSideBar";
 import RightSideBar from "./RightSideBar";
+import { FcGallery } from "react-icons/fc";
 
- const image_hosting_key = import.meta.env.VITE_IMAGE_HOST_KEY;
- const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOST_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Blogs = () => {
   // const editor = useRef(null)
   // const [post, setPost]= useState();
-  
-  const {user}= useAuth();
-  const axiosPublic = useAxiosPublic()
-  const axiosSecure = useAxiosSecure()
+  const { user } = useAuth();
+  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
   const {
     register,
@@ -28,14 +27,14 @@ const Blogs = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit =async (data) => {
-    const imageFile = {image: data.images[0]}
+  const onSubmit = async (data) => {
+    const imageFile = { image: data.images[0] };
     const res = await axiosPublic.post(image_hosting_api, imageFile, {
       headers: {
-        'content-type': 'multipart/form-data'
-      }
-    })
-    if(res.data.success){
+        "content-type": "multipart/form-data",
+      },
+    });
+    if (res.data.success) {
       const blogsUser = {
         title: data.title,
         postType: data.postType,
@@ -43,17 +42,17 @@ const Blogs = () => {
         images: res.data.data.display_url,
         userName: user.displayName,
         userPhoto: user.photoURL,
-        userPostTime: user.metadata.creationTime
-      }
-      const blogs = await axiosSecure.post('/blogs', blogsUser)
-      if(blogs.data.insertedId){
-        reset()
+        userPostTime: user.metadata.creationTime,
+      };
+      const blogs = await axiosSecure.post("/blogs", blogsUser);
+      if (blogs.data.insertedId) {
+        reset();
         Swal.fire({
           position: "top-end",
           icon: "success",
           title: "Post Successfully",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
       }
     }
@@ -74,7 +73,7 @@ const Blogs = () => {
                   <div>
                     <div className="avatar">
                       <div className="w-16 rounded-full">
-                        <img src={user?.photoURL}/>
+                        <img src={user?.photoURL} />
                       </div>
                     </div>
                   </div>
@@ -175,7 +174,11 @@ const Blogs = () => {
                       </div>
                       <div className="flex items-center justify-between my-8">
                         <div className="flex items-center">
-                        <input type="file" {...register('images', { required: true })} className="file-input file-input-bordered file-input-error file-input-xs w-full max-w-xs" />
+                          <input
+                            type="file"
+                            {...register("images", { required: true })}
+                            className="file-input file-input-bordered file-input-error file-input-xs w-full max-w-xs"
+                          />
                         </div>
                         <input
                           type="submit"
@@ -259,7 +262,7 @@ const Blogs = () => {
               <div className="">
                 <LeftSideBar />
               </div>
-              <div className="md:col-span-2">
+              <div className="md:col-span-2 border-b border-r border-l">
                 <BlogContent />
               </div>
               <div className="">
