@@ -32,7 +32,7 @@ const Dashboard = () => {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/dashboard/all-blood-donation-request">
+                  <NavLink to="/dashboard/admin-all-blood-donation-request">
                     <MdOutlineBloodtype /> All Blood Donation Request
                   </NavLink>
                 </li>
