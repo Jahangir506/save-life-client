@@ -8,8 +8,8 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
 const CreateDonationRequest = () => {
-  const axiosPublic = useAxiosPublic()
-  const navigate = useNavigate()
+  const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
   const [districts, upazilas] = useDistrictsUpazilas();
   const { user } = useAuth();
 
@@ -32,20 +32,24 @@ const CreateDonationRequest = () => {
       requesterName: data.requesterName,
       time: data.time,
       upazila: data.upazila,
-      photo: user?.photoURL
-    }
+      photo: user?.photoURL,
+      bloodGroup: data.bloodGroup
+    };
     console.log(createDonationReq);
-    const createDonReq = await axiosPublic.post("/createDonationRequest", createDonationReq)
-    if(createDonReq.data.insertedId){
-      reset()
+    const createDonReq = await axiosPublic.post(
+      "/createDonationRequest",
+      createDonationReq
+    );
+    if (createDonReq.data.insertedId) {
+      reset();
       Swal.fire({
         position: "top-end",
         icon: "success",
         title: "Create Donation Request Successfully",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
       });
-    navigate('/')
+      navigate("/");
     }
   };
 
@@ -135,7 +139,29 @@ const CreateDonationRequest = () => {
                 </div>
               </div>
               <div className="flex  gap-6 w-full">
-                <div className="form-control w-1/2">
+                <div className="form-control w-1/3">
+                  <label className="label">
+                    <span className="label-text">Blood Group</span>
+                  </label>
+                  <select
+                    {...register("bloodGroup", { required: true })}
+                    className="select select-error w-full"
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      Select
+                    </option>
+                    <option>A+</option>
+                    <option>A-</option>
+                    <option>B+</option>
+                    <option>B-</option>
+                    <option>AB+</option>
+                    <option>AB-</option>
+                    <option>O+</option>
+                    <option>O-</option>
+                  </select>
+                </div>
+                <div className="form-control w-1/3">
                   <label className="label">
                     <span className="label-text">District</span>
                   </label>
@@ -150,7 +176,7 @@ const CreateDonationRequest = () => {
                     ))}
                   </select>
                 </div>
-                <div className="form-control w-1/2">
+                <div className="form-control w-1/3">
                   <label className="label">
                     <span className="label-text">Upazila</span>
                   </label>
