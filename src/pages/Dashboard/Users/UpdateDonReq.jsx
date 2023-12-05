@@ -1,11 +1,11 @@
-import { useForm } from "react-hook-form";
-import Swal from "sweetalert2";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
-import { useLoaderData, useNavigate } from "react-router-dom";
-import useDistrictsUpazilas from "../../../hooks/useDistrictsUpazilas";
-import useAuth from "../../../hooks/useAuth";
-import TitleSection from "../../../components/shared/TitleSection/TitleSection";
 import { Helmet } from "react-helmet-async";
+import { useForm } from "react-hook-form";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import TitleSection from "../../../components/shared/TitleSection/TitleSection";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useDistrictsUpazilas from "../../../hooks/useDistrictsUpazilas";
 
 const UpdateDonReq = () => {
   const axiosPublic = useAxiosPublic();
@@ -53,9 +53,11 @@ const UpdateDonReq = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-      navigate("/");
+      navigate(-1)
     }
   };
+
+  
   return (
     <>
       <div className="mt-20 mb-12">

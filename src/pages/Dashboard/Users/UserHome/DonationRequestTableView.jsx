@@ -1,11 +1,40 @@
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import useCreateDonationReq from "../../../../hooks/useCreateDonationReq";
 
-const DonationRequestTableView = ({detail, index}) => {
+const DonationRequestTableView = ({ detail, index }) => {
+    const [,refetch] = useCreateDonationReq()
+    const axiosSecure = useAxiosSecure()
 
+    const handleDelete = (id) => {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            axiosSecure.delete(`/createDonationRequest/${id}`).then((res) => {
+              refetch();
+              if (res.data.deletedCount > 0) {
+                Swal.fire({
+                  title: "Deleted!",
+                  text: "Your file has been deleted.",
+                  icon: "success",
+                });
+              }
+            });
+          }
+        });
+      };
 
-    return(
-        <>
+  return (
+    <>
       <tr key={detail?._id}>
         <th>{index + 1}</th>
         <td>
@@ -45,18 +74,17 @@ const DonationRequestTableView = ({detail, index}) => {
         <th>
           <Link to={`/dashboard/update-donation-request/${detail._id}`}>
             <button className="btn btn-sm bg-black/25 hover:bg-red-500 hover:text-white">
-              <FaEdit className="text-lg"/>
+              <FaEdit className="text-lg" />
             </button>
           </Link>
         </th>
         <th>
-          <Link to={`/createDonationRequest/${detail?._id}`}>
-            <button className="btn btn-sm bg-black/25 hover:bg-red-500 hover:text-white">
+          <button onClick={()=>handleDelete(detail._id)} className="btn btn-sm bg-black/25 hover:bg-red-500 hover:text-white">
             <FaTrashAlt className="text-lg" />
-            </button>
-          </Link>
+          </button>
         </th>
       </tr>
     </>
-    )}
+  );
+};
 export default DonationRequestTableView;
