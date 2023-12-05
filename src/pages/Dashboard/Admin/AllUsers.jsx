@@ -1,10 +1,11 @@
 import { FaTrashAlt, FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
-import useAllUser from "../../../hooks/useAllUser";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAllUser from "../../../hooks/useAllUser";
 
 const AllUsers = () => {
-  const [users, refetch] = useAllUser();
+  const [users, refetch]= useAllUser()
+  console.log(users);
   const axiosSecure = useAxiosSecure();
 
   const handleAdmin = (user) => {
