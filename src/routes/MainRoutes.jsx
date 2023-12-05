@@ -6,14 +6,15 @@ import Dashboard from "../layouts/Dashboard";
 import MainLayouts from "../layouts/MainLayouts";
 import Blogs from "../pages/Blogs/Blogs";
 import BloodDonationDetails from "../pages/BloodDonationDetails/BloodDonationDetails";
+import AdminBloodDonationRequest from "../pages/Dashboard/Admin/AdminBloodDonationRequest";
 import AdminContentManage from "../pages/Dashboard/Admin/AdminContentManage";
 import AdminHome from "../pages/Dashboard/Admin/AdminHome";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import CreateDonationRequest from "../pages/Dashboard/Users/CreateDonationRequest";
 import MyDonationRequest from "../pages/Dashboard/Users/MyDonationRequest";
-import UserHome from "../pages/Dashboard/Users/userHome";
-import AllBloodDonationRequest from "../pages/Dashboard/Volunteer/VolunteerBloodDonationRequest";
+import UserHome from "../pages/Dashboard/Users/UserHome/userHome";
 import ContentManagement from "../pages/Dashboard/Volunteer/ContentManagement";
+import AllBloodDonationRequest from "../pages/Dashboard/Volunteer/VolunteerBloodDonationRequest";
 import VolunteerHome from "../pages/Dashboard/Volunteer/VolunteerHome";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
@@ -21,7 +22,6 @@ import SearchDonors from "../pages/SearchDonors/SearchDonors";
 import AdminRoutes from "./AdminRoutes";
 import PrivateRoutes from "./PrivateRoutes";
 import VolunteerRoutes from "./VolunteerRoutes";
-import AdminBloodDonationRequest from "../pages/Dashboard/Admin/AdminBloodDonationRequest";
 
 export const router = createBrowserRouter([
   {
@@ -61,7 +61,7 @@ export const router = createBrowserRouter([
           </PrivateRoutes>
         ),
         loader: ({ params }) =>
-          fetch(`https://save-life-server.vercel.app/createDonationRequest/${params.id}`),
+          fetch(`http://localhost:5000/createDonationRequest/${params.id}`),
       },
     ],
   },
@@ -115,11 +115,12 @@ export const router = createBrowserRouter([
       },
       {
         path: "users-home",
-        element: <UserHome />,
+        element: <UserHome/>,
       },
       {
         path: "my-donation-requests",
         element: <MyDonationRequest />,
+        // loader: ()=> fetch('http://localhost:5000/createDonationRequest')
       },
       {
         path: "create-donation-request",
