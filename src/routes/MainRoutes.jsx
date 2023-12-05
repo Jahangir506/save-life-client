@@ -12,6 +12,7 @@ import AdminHome from "../pages/Dashboard/Admin/AdminHome";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import CreateDonationRequest from "../pages/Dashboard/Users/CreateDonationRequest";
 import MyDonationRequest from "../pages/Dashboard/Users/MyDonationRequest";
+import UpdateDonReq from "../pages/Dashboard/Users/UpdateDonReq";
 import UserHome from "../pages/Dashboard/Users/UserHome/userHome";
 import ContentManagement from "../pages/Dashboard/Volunteer/ContentManagement";
 import AllBloodDonationRequest from "../pages/Dashboard/Volunteer/VolunteerBloodDonationRequest";
@@ -125,6 +126,11 @@ export const router = createBrowserRouter([
       {
         path: "create-donation-request",
         element: <CreateDonationRequest />,
+      },
+      {
+        path: "/dashboard/update-donation-request/:id",
+        element: <UpdateDonReq/>,
+        loader: ({params}) => fetch(`http://localhost:5000/createDonationRequest/${params.id}`)
       },
       {
         path: "volunteer-home",

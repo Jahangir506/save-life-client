@@ -43,7 +43,7 @@ const DonationRequestTableView = ({detail, index}) => {
           </Link>
         </th>
         <th>
-          <Link to={`/createDonationRequest/${detail?._id}`}>
+          <Link to={`/dashboard/update-donation-request/${detail._id}`}>
             <button className="btn btn-sm bg-black/25 hover:bg-red-500 hover:text-white">
               <FaEdit className="text-lg"/>
             </button>
