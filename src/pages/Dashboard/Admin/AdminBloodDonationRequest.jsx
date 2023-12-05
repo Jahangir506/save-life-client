@@ -1,18 +1,10 @@
 import { Helmet } from "react-helmet-async";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
-import { useQuery } from "@tanstack/react-query";
 import DonationRequestTable from "../../../components/DonationRequest/DonationRequestTable";
+import useCreateDonationReq from "../../../hooks/useCreateDonationReq";
 
 const AdminBloodDonationRequest = () => {
-    const axiosPublic = useAxiosPublic()
+    const [createDonationReq] = useCreateDonationReq()
 
-    const {data: createDonationReq = []} = useQuery({
-      queryKey: ['createDonationReq'],
-      queryFn: async ()=> {
-        const res = await axiosPublic.get('/createDonationRequest')
-        return(res.data);
-      }
-    })
   return (
     <>
       <Helmet>
@@ -21,7 +13,7 @@ const AdminBloodDonationRequest = () => {
       <div className="py-36 max-w-7xl mx-auto">
         <div className="bg-[#F0412E] py-4 w-full">
           <h2 className="text-center text-white text-2xl">
-            All Blood Donation Request
+            All Blood Donation Request 
           </h2>
         </div>
         <div className="overflow-x-auto">
