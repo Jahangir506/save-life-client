@@ -1,34 +1,64 @@
-import { FaUser } from "react-icons/fa";
-import { FaHandHoldingDollar, FaSackDollar } from "react-icons/fa6";
+import { FaUsers } from "react-icons/fa";
 import useAllUser from "../../../hooks/useAllUser";
 import useCreateDonationReq from "../../../hooks/useCreateDonationReq";
 
 const AdminHome = () => {
-  const [createDonationReq] = useCreateDonationReq()
-  const [users] = useAllUser()
+  const [createDonationReq] = useCreateDonationReq();
+  const [users] = useAllUser();
   return (
     <>
       <div className="my-20">
-        <div className="grid grid-cols-3 max-w-7xl mx-auto">
-          <div className="card w-72 h-36 bg-red-400 text-white">
-            <div className="card-body items-center text-center">
-              <h2 className="card-title"><FaUser className="text-2xl"/></h2>
-              <p>Total Users</p>
-              <p className="text-3xl">{users.length}</p>
+        <div className="flex justify-center items-center">
+          <div className="stats shadow">
+            <div className="stat">
+              <div className="stat-figure text-secondary">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  className="inline-block w-8 h-8 stroke-current"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div className="stat-title">Total Blood Donation Request</div>
+              <div className="stat-value">{createDonationReq.length}</div>
+              <div className="stat-desc">Jan 1st - Feb 1st</div>
             </div>
-          </div>
-          <div className="card w-72 h-36 bg-red-400 text-white">
-            <div className="card-body items-center text-center">
-              <h2 className="card-title"><FaSackDollar className="text-2xl"/></h2>
-              <p>Total Fund</p>
-              <p className="text-3xl">0</p>
+
+            <div className="stat">
+              <div className="stat-figure text-secondary">
+               <FaUsers className="text-3xl"/>
+              </div>
+              <div className="stat-title">New Users</div>
+              <div className="stat-value">{users.length}</div>
+              <div className="stat-desc">↗︎ 400 (22%)</div>
             </div>
-          </div>
-          <div className="card w-80 h-36 bg-red-400 text-white">
-            <div className="card-body items-center text-center">
-              <h2 className="card-title"><FaHandHoldingDollar className="text-2xl"/></h2>
-              <p>Total Blood Donation Request</p>
-              <p className="text-3xl">{createDonationReq.length}</p>
+
+            <div className="stat">
+              <div className="stat-figure text-secondary">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  className="inline-block w-8 h-8 stroke-current"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+                  ></path>
+                </svg>
+              </div>
+              <div className="stat-title">Fund</div>
+              <div className="stat-value">1,200</div>
+              <div className="stat-desc">↘︎ 90 (14%)</div>
             </div>
           </div>
         </div>

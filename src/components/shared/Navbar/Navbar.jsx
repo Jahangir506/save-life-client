@@ -22,6 +22,9 @@ const Navbar = () => {
         <Link to="/donationRequest">Donation Request</Link>
       </li>
       <li>
+        <Link to="/funding">Funding</Link>
+      </li>
+      <li>
         <Link to="/register">Registration</Link>
       </li>
       {user ? (

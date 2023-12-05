@@ -23,6 +23,7 @@ import SearchDonors from "../pages/SearchDonors/SearchDonors";
 import AdminRoutes from "./AdminRoutes";
 import PrivateRoutes from "./PrivateRoutes";
 import VolunteerRoutes from "./VolunteerRoutes";
+import Funding from "../components/shared/Funding/Funding";
 
 export const router = createBrowserRouter([
   {
@@ -53,6 +54,11 @@ export const router = createBrowserRouter([
       {
         path: "/donationRequest",
         element: <DonationRequest />,
+      },
+      {
+        path: "/funding",
+        element: <Funding/>,
+        loader: () => fetch('http://localhost:5000/funding')
       },
       {
         path: "/createDonationRequest/:id",
