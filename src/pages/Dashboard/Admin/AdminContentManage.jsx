@@ -1,11 +1,6 @@
-
-
 import { Link } from "react-router-dom";
 
-
-
 const AdminContentManage = () => {
-
   return (
     <>
       <div>

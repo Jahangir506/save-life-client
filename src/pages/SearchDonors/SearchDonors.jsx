@@ -185,7 +185,7 @@ const SearchDonors = () => {
   const [search, setSearch] = useState({
     district: "",
     upazila: "",
-    // bloodGroup: "",
+    bloodGroup: "",
   });
 
   console.log(search);
@@ -208,7 +208,7 @@ const SearchDonors = () => {
     setSearch({
       district: data.district,
       upazila: data.upazila,
-      // bloodGroup: data.bloodGroup,
+      bloodGroup: data.bloodGroup,
     });
   };
 
@@ -221,12 +221,12 @@ const SearchDonors = () => {
       search.upazila === '' ||
       (detail.upazila && detail.upazila.toLowerCase().includes(search.upazila.toLowerCase()));
 
-    // const bloodGroupMatch =
-    //   search.bloodGroup ||
-    //   (detail.bloodGroup && detail.bloodGroup.toLowerCase().includes(search.bloodGroup.toLowerCase()));
+    const bloodGroupMatch =
+      search.bloodGroup ||
+      (detail.bloodGroup && detail.bloodGroup.toLowerCase().includes(search.bloodGroup.toLowerCase()));
 
-      console.log(districtMatch || upazilaMatch );
-    return districtMatch || upazilaMatch ;
+      console.log(districtMatch && upazilaMatch && bloodGroupMatch );
+    return districtMatch && upazilaMatch && bloodGroupMatch ;
   });
 
   console.log(filteredDonationReq);

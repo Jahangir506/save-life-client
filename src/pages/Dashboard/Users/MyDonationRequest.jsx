@@ -1,18 +1,14 @@
 import { Helmet } from "react-helmet-async";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
-import { useQuery } from "@tanstack/react-query";
 import DonationRequestTable from "../../../components/DonationRequest/DonationRequestTable";
+import useAuth from "../../../hooks/useAuth";
+import useCreateDonationReq from "../../../hooks/useCreateDonationReq";
 
 const MyDonationRequest = () => {
+  const {user} = useAuth()
+  const [createDonationReq] = useCreateDonationReq()
 
-  const axiosPublic = useAxiosPublic();
-
-  const { data: createDonationReq = [] } = useQuery({
-    queryKey: ["createDonationReq"],
-    queryFn: async () => {
-      const res = await axiosPublic.get("/createDonationRequest");
-      return res.data;
-    },
+  const donationReq = createDonationReq.filter((detail) => {
+    return detail.requesterEmail === user?.email;
   });
 
   return (
@@ -41,7 +37,7 @@ const MyDonationRequest = () => {
             </thead>
             <tbody>
               {/* row 1 */}
-              {createDonationReq.map((detail, index) => (
+              {donationReq.map((detail, index) => (
                 <DonationRequestTable
                   key={detail._id}
                   detail={detail}
