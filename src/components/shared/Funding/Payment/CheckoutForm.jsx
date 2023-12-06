@@ -4,7 +4,7 @@ import { useState } from "react";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAuth from "../../../../hooks/useAuth";
 
-const CheckoutForm = ({ taka }) => {
+const CheckoutForm = () => {
   const axiosSecure = useAxiosSecure();
   const [err, setErr] = useState("");
   const stripe = useStripe();
@@ -13,11 +13,11 @@ const CheckoutForm = ({ taka }) => {
   const { user } = useAuth();
 
   useEffect(() => {
-    axiosSecure.post("/create-payment-intent", {fund : taka}).then((res) => {
+    axiosSecure.post("/create-payment-intent", ).then((res) => {
       console.log(res.data.clientSecret);
       setClientSecret(res.data.clientSecret);
     });
-  }, [axiosSecure, taka]);
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -87,7 +87,7 @@ const CheckoutForm = ({ taka }) => {
           <button
             type="submit"
             disabled={!stripe}
-            className="btn bg-red-500 text-white w-24 hover:bg-black rounded-none border-none"
+            className="btn bg-red-500 text-white w-full hover:bg-black rounded-none border-none"
           >
             Payment
           </button>

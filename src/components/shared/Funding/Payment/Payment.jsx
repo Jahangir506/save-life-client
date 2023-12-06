@@ -3,13 +3,12 @@ import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "./CheckoutForm";
 
 const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
-const Payment = ({taka}) => {
-    console.log(taka);
+const Payment = () => {
   return (
     <>
       <div>
         <Elements stripe={stripePromise}>
-          <CheckoutForm taka={taka}/>
+          <CheckoutForm/>
         </Elements>
       </div>
     </>

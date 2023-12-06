@@ -100,29 +100,29 @@ const Funding = () => {
                   <div className="flex  gap-6 w-full">
                     <div className="form-control w-full">
                       <label className="label">
-                        <span className="label-text">Taka</span>
+                        <span className="label-text">amount</span>
                       </label>
                       <input
                         type="name"
-                        name="taka"
-                        {...register("taka", { required: true })}
-                        placeholder="taka"
+                        name="amount"
+                        {...register("amount", { required: true })}
+                        placeholder="amount"
                         className="input input-bordered w-full"
                         required
                       />
                     </div>
                   </div>
-                  <div className="my-10">
+                  <div className="mt-10">
                     <input
                       type="submit"
                       placeholder="payment"
-                      className="btn bg-red-500 text-white w-full hover:bg-black rounded-none border-none"
+                      className="btn bg-red-500 text-white w-24 hover:bg-black rounded-none border-none"
                     >
                     </input>
                   </div>
                 </form>
                 <div>
-                  <Payment taka={taka} />
+                  <Payment/>
                 </div>
               </div>
             </div>

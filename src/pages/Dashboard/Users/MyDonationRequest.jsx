@@ -71,7 +71,7 @@ const MyDonationRequest = () => {
           }).map((_, index) => (
             <button
               key={index}
-              className="ml-6 btn btn-secondary text-center"
+              className="ml-6 btn btn-error text-center"
               onClick={() => paginate(index + 1)}
             >
               {index + 1}
