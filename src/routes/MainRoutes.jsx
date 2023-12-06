@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import DonationRequest from "../components/DonationRequest/DonationRequest";
+import Funding from "../components/shared/Funding/Funding";
 import Login from "../components/shared/Login/Login";
 import Register from "../components/shared/Register/Register";
 import Dashboard from "../layouts/Dashboard";
@@ -23,7 +24,6 @@ import SearchDonors from "../pages/SearchDonors/SearchDonors";
 import AdminRoutes from "./AdminRoutes";
 import PrivateRoutes from "./PrivateRoutes";
 import VolunteerRoutes from "./VolunteerRoutes";
-import Funding from "../components/shared/Funding/Funding";
 
 export const router = createBrowserRouter([
   {
@@ -58,7 +58,7 @@ export const router = createBrowserRouter([
       {
         path: "/funding",
         element: <Funding/>,
-        loader: () => fetch('http://localhost:5000/funding')
+        loader: () => fetch('https://save-life-server.vercel.app/funding')
       },
       {
         path: "/createDonationRequest/:id",
@@ -68,7 +68,7 @@ export const router = createBrowserRouter([
           </PrivateRoutes>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/createDonationRequest/${params.id}`),
+          fetch(`https://save-life-server.vercel.app/createDonationRequest/${params.id}`),
       },
     ],
   },
@@ -127,7 +127,7 @@ export const router = createBrowserRouter([
       {
         path: "my-donation-requests",
         element: <MyDonationRequest />,
-        // loader: ()=> fetch('http://localhost:5000/createDonationRequest')
+        // loader: ()=> fetch('https://save-life-server.vercel.app/createDonationRequest')
       },
       {
         path: "create-donation-request",
@@ -136,7 +136,7 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/update-donation-request/:id",
         element: <UpdateDonReq/>,
-        loader: ({params}) => fetch(`http://localhost:5000/createDonationRequest/${params.id}`)
+        loader: ({params}) => fetch(`https://save-life-server.vercel.app/createDonationRequest/${params.id}`)
       },
       {
         path: "volunteer-home",

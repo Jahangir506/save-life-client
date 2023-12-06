@@ -5,20 +5,12 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import TitleSection from "../TitleSection/TitleSection";
 import Payment from "./Payment/Payment";
-import { useState } from "react";
 
 const Funding = () => {
   const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
   // const [fund] = useLoaderData();
   // console.log(fund.taka);
-  const [taka, setTaka] = useState(0);
-
-  const handleTaka = (e) => {
-    const parsedValue = e.target.value;
-    setTaka(parsedValue);
-    return parsedValue;
-  };
 
   const {
     register,
@@ -114,7 +106,6 @@ const Funding = () => {
                         type="name"
                         name="taka"
                         {...register("taka", { required: true })}
-                        onChange={handleTaka}
                         placeholder="taka"
                         className="input input-bordered w-full"
                         required
