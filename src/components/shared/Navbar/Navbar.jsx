@@ -1,6 +1,4 @@
-import { useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { AuthContext } from "../../../providers/AuthProvider";
+import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 
 const Navbar = () => {
@@ -46,11 +44,10 @@ const Navbar = () => {
                   <Link to="/dashboard">Dashboard</Link>
                 </li>
               )}
-              <Link to="/login">
+
                 <li>
                   <Link onClick={handleLogOut}>Log Out</Link>
                 </li>
-              </Link>
             </div>
           </ul>
         </div>

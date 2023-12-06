@@ -4,12 +4,12 @@ const ContactUs = () => {
   return (
     <>
       <div className="hero mt-20">
-        <div className="flex flex-col w-full border-opacity-50 pb-8">
-          <div className="divider w-[900px] divide
+        <div className="flex flex-col w-24 lg:w-full border-opacity-50 pb-8">
+          <div className="divider w-w-[200px] lg:w-[900px] divide
            mx-auto ">
             <TitleSection heading={"Contact Us"}/>
           </div>
-          <div className="hero-content gap-8 p-12 w-full flex-col lg:flex-row">
+          <div className="hero-content gap-8 p-12 lg:w-full flex-col lg:flex-row">
             <div className="text-center w-1/2 lg:text-left bg-red-400 text-white">
               <div className="card-body space-y-5">
                 <p>Blood Excellence!</p>
