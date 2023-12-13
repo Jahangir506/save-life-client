@@ -3,21 +3,29 @@ import { useEffect } from "react";
 import { useState } from "react";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAuth from "../../../../hooks/useAuth";
+import useFundAmount from "../../../../hooks/useFundAmount";
 
 const CheckoutForm = () => {
+  const [fundAmount] = useFundAmount();
   const axiosSecure = useAxiosSecure();
   const [err, setErr] = useState("");
   const stripe = useStripe();
   const elements = useElements();
   const [clientSecret, setClientSecret] = useState("");
   const { user } = useAuth();
+  const totalAmount = fundAmount.reduce(
+    (total, totalAmount) => total + totalAmount.amount,
+    0
+  );
 
   useEffect(() => {
-    axiosSecure.post("/create-payment-intent", ).then((res) => {
-      console.log(res.data.clientSecret);
-      setClientSecret(res.data.clientSecret);
-    });
-  }, []);
+    axiosSecure
+      .post("/create-payment-intent", { fund: totalAmount })
+      .then((res) => {
+        console.log(res.data.clientSecret);
+        setClientSecret(res.data.clientSecret);
+      });
+  }, [axiosSecure, totalAmount]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -56,9 +64,9 @@ const CheckoutForm = () => {
       });
 
     if (confirmErr) {
-      console.log('confirm error', confirmErr);
-    }else{
-      console.log('payment intent', paymentIntent);
+      console.log("confirm error", confirmErr);
+    } else {
+      console.log("payment intent", paymentIntent);
     }
   };
 
@@ -97,3 +105,5 @@ const CheckoutForm = () => {
   );
 };
 export default CheckoutForm;
+
+

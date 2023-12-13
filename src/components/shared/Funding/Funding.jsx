@@ -9,8 +9,6 @@ import Payment from "./Payment/Payment";
 const Funding = () => {
   const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
-  // const [fund] = useLoaderData();
-  // console.log(fund.taka);
 
   const {
     register,
@@ -23,8 +21,9 @@ const Funding = () => {
     const funding = {
       name: data.name,
       email: data.email,
-      taka: data.taka,
+      amount: data.amount,
     };
+console.log(funding);
     axiosPublic
       .post("/funding", funding)
       .then((res) => {

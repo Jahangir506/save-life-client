@@ -14,7 +14,7 @@ import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import CreateDonationRequest from "../pages/Dashboard/Users/CreateDonationRequest";
 import MyDonationRequest from "../pages/Dashboard/Users/MyDonationRequest";
 import UpdateDonReq from "../pages/Dashboard/Users/UpdateDonReq";
-import UserHome from "../pages/Dashboard/Users/UserHome/userHome";
+import UserHome from "../pages/Dashboard/Users/UserHome/UserHome";
 import ContentManagement from "../pages/Dashboard/Volunteer/ContentManagement";
 import AllBloodDonationRequest from "../pages/Dashboard/Volunteer/VolunteerBloodDonationRequest";
 import VolunteerHome from "../pages/Dashboard/Volunteer/VolunteerHome";
@@ -58,7 +58,6 @@ export const router = createBrowserRouter([
       {
         path: "/funding",
         element: <Funding/>,
-        loader: () => fetch('https://save-life-server.vercel.app/funding')
       },
       {
         path: "/createDonationRequest/:id",
@@ -68,7 +67,7 @@ export const router = createBrowserRouter([
           </PrivateRoutes>
         ),
         loader: ({ params }) =>
-          fetch(`https://save-life-server.vercel.app/createDonationRequest/${params.id}`),
+          fetch(`http://localhost:5000/createDonationRequest/${params.id}`),
       },
     ],
   },
@@ -127,7 +126,6 @@ export const router = createBrowserRouter([
       {
         path: "my-donation-requests",
         element: <MyDonationRequest />,
-        // loader: ()=> fetch('https://save-life-server.vercel.app/createDonationRequest')
       },
       {
         path: "create-donation-request",
@@ -136,7 +134,7 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/update-donation-request/:id",
         element: <UpdateDonReq/>,
-        loader: ({params}) => fetch(`https://save-life-server.vercel.app/createDonationRequest/${params.id}`)
+        loader: ({params}) => fetch(`http://localhost:5000/createDonationRequest/${params.id}`)
       },
       {
         path: "volunteer-home",
